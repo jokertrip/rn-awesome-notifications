@@ -28,9 +28,7 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
     iPhoneHelper_1 = __importDefault(iPhoneHelper_1);
     var screen = react_native_1.Dimensions.get("screen");
     var TOSS_SEC = 5;
-    //const height = 100;
     var offsetFullMode = 200;
-    //const fullHeight = offsetFullMode + height;
     var topOffset = react_native_1.Platform.select({ ios: iPhoneHelper_1.default.isIphoneX() ? 45 : 20, default: 0 });
     var Notification = function (_a) {
         var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, 
@@ -52,7 +50,6 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
         var transY = new react_native_reanimated_1.Value(-screen.height);
         var prevDragY = new react_native_reanimated_1.Value(0);
         var clock = React.useMemo(function () { return new react_native_reanimated_1.Clock(); }, []);
-        var clockHeight = React.useMemo(function () { return new react_native_reanimated_1.Clock(); }, []);
         var wasDrag = react_native_reanimated_1.useValue(0);
         var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - topOffset;
         var snapPoint = React.useMemo(function () {
@@ -61,32 +58,23 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
             ]);
         }, [height]);
         var close = React.useMemo(function () {
-            return react_native_reanimated_1.cond(react_native_reanimated_1.lessThan(transY, -20), [
-                react_native_reanimated_1.call([], function () { return hideNotify(); })
-            ]);
+            return react_native_reanimated_1.block([]);
         }, []);
-        //         const setCloseVisible = React.useMemo(() => {
-        //             return block([
-        // //                cond(and(lessThan(dragY, offsetFullMode), greaterThan(dragY, 0), not(fullState)), set(heightAnimation, add(dragY, height))),
-        //                 cond(and(greaterThan(dragY, offsetFullMode), not(fullState)), [
-        //                     set(fullState, 1),
-        //                     call([], () => { setFullState(true) })
-        //                 ])
-        //             ])
-        //         }, [])
+        // const close = React.useMemo(() => {
+        //     return cond(lessThan(transY, -20), [
+        //         call([], () => hideNotify())
+        //     ])
+        // }, [])
         var translateY = React.useMemo(function () { return react_native_reanimated_1.cond(react_native_reanimated_1.eq(state, react_native_gesture_handler_1.State.ACTIVE), [
             react_native_reanimated_1.set(wasDrag, 1),
             react_native_reanimated_1.stopClock(clock),
             react_native_reanimated_1.set(transY, react_native_reanimated_1.add(transY, react_native_reanimated_1.sub(dragY, prevDragY))),
-            //  setCloseVisible,
-            // set(prevTanslateY, transY),
             react_native_reanimated_1.set(prevDragY, dragY),
             transY,
         ], [
             react_native_reanimated_1.cond(wasDrag, [
                 react_native_reanimated_1.cond(react_native_reanimated_1.lessThan(dragY, -20), react_native_reanimated_1.call([], function () { return hideNotify(); })),
                 react_native_reanimated_1.set(prevDragY, 0),
-                //cond(not(fullState), set(heightAnimation, runTiming(clockHeight)({ lastVal: heightAnimation, toValue: new Animated.Value(height), duration: 300 }))),
                 react_native_reanimated_1.set(transY, react_native_reanimated_1.cond(react_native_reanimated_1.defined(transY), animations_1.runSpring(clock, transY, dragVY, snapPoint, close), 0)),
             ], transY)
         ]); }, [height]);

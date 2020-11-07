@@ -8,15 +8,12 @@ import { CloseButtonProps, NotificationActions, NotificationParams, Notification
 const screen = Dimensions.get("screen");
 
 const TOSS_SEC = 5;
-//const height = 100;
 const offsetFullMode = 200;
-//const fullHeight = offsetFullMode + height;
 
 const topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 45 : 20, default: 0 });
 
 export type NotificationProps = {
     render?: (args: NotificationParams & NotificationActions) => React.ReactNode,
-    //renderCloseButton?: (args: CloseButtonProps) => React.ReactNode,
     vibration?: boolean,
     showingCountInMoment?: number
 }
@@ -63,7 +60,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
         const prevDragY = new Value(0);
 
         const clock = React.useMemo(() => new Clock(), []);
-        const clockHeight = React.useMemo(() => new Clock(), []);
 
         const wasDrag = useValue(0);
 
@@ -80,21 +76,15 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
         }, [height])
 
         const close = React.useMemo(() => {
-            return cond(lessThan(transY, -20), [
-                call([], () => hideNotify())
-            ])
+            return block([])
         }, [])
 
+        // const close = React.useMemo(() => {
+        //     return cond(lessThan(transY, -20), [
+        //         call([], () => hideNotify())
+        //     ])
+        // }, [])
 
-        //         const setCloseVisible = React.useMemo(() => {
-        //             return block([
-        // //                cond(and(lessThan(dragY, offsetFullMode), greaterThan(dragY, 0), not(fullState)), set(heightAnimation, add(dragY, height))),
-        //                 cond(and(greaterThan(dragY, offsetFullMode), not(fullState)), [
-        //                     set(fullState, 1),
-        //                     call([], () => { setFullState(true) })
-        //                 ])
-        //             ])
-        //         }, [])
 
         const translateY = React.useMemo(() => cond(
             eq(state, GestureState.ACTIVE),
@@ -102,8 +92,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                 set(wasDrag, 1),
                 stopClock(clock),
                 set(transY, add(transY, sub(dragY, prevDragY))),
-                //  setCloseVisible,
-                // set(prevTanslateY, transY),
                 set(prevDragY, dragY),
 
                 transY,
@@ -112,7 +100,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                 cond(wasDrag, [
                     cond(lessThan(dragY, -20), call([], () => hideNotify())),
                     set(prevDragY, 0),
-                    //cond(not(fullState), set(heightAnimation, runTiming(clockHeight)({ lastVal: heightAnimation, toValue: new Animated.Value(height), duration: 300 }))),
                     set(
                         transY,
                         cond(defined(transY), runSpring(clock, transY, dragVY, snapPoint, close), 0)
@@ -201,7 +188,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                             })),
                             top,
                             transform: [{ translateY, scale }],
-                            // height: heightAnimation
                         }
                     ]}
                 >
@@ -255,22 +241,10 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                                     data,
                                     close: hideNotify,
                                     title,
-                                    //heightAnimation
                                 })
                             }
                         </Animated.View>
                     </TapGestureHandler>
-                    {/* {
-                        renderCloseButton && renderCloseButton({
-                            fullState,
-                            onPress: (e) => {
-                                clearTimeout(timer.current);
-                                if (e.nativeEvent.state === GestureState.END) {
-                                    hideNotify();
-                                }
-                            }
-                        })
-                    } */}
                 </Animated.View>
             </PanGestureHandler>
 

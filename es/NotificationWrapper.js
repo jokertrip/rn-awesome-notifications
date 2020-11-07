@@ -7,9 +7,7 @@ import iPhoneHelper from "./iPhoneHelper";
 import { NotificationType } from "./types";
 var screen = Dimensions.get("screen");
 var TOSS_SEC = 5;
-//const height = 100;
 var offsetFullMode = 200;
-//const fullHeight = offsetFullMode + height;
 var topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 45 : 20, default: 0 });
 var Notification = function (_a) {
     var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, 
@@ -31,7 +29,6 @@ var Notification = function (_a) {
     var transY = new Value(-screen.height);
     var prevDragY = new Value(0);
     var clock = React.useMemo(function () { return new Clock(); }, []);
-    var clockHeight = React.useMemo(function () { return new Clock(); }, []);
     var wasDrag = useValue(0);
     var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - topOffset;
     var snapPoint = React.useMemo(function () {
@@ -40,32 +37,23 @@ var Notification = function (_a) {
         ]);
     }, [height]);
     var close = React.useMemo(function () {
-        return cond(lessThan(transY, -20), [
-            call([], function () { return hideNotify(); })
-        ]);
+        return block([]);
     }, []);
-    //         const setCloseVisible = React.useMemo(() => {
-    //             return block([
-    // //                cond(and(lessThan(dragY, offsetFullMode), greaterThan(dragY, 0), not(fullState)), set(heightAnimation, add(dragY, height))),
-    //                 cond(and(greaterThan(dragY, offsetFullMode), not(fullState)), [
-    //                     set(fullState, 1),
-    //                     call([], () => { setFullState(true) })
-    //                 ])
-    //             ])
-    //         }, [])
+    // const close = React.useMemo(() => {
+    //     return cond(lessThan(transY, -20), [
+    //         call([], () => hideNotify())
+    //     ])
+    // }, [])
     var translateY = React.useMemo(function () { return cond(eq(state, GestureState.ACTIVE), [
         set(wasDrag, 1),
         stopClock(clock),
         set(transY, add(transY, sub(dragY, prevDragY))),
-        //  setCloseVisible,
-        // set(prevTanslateY, transY),
         set(prevDragY, dragY),
         transY,
     ], [
         cond(wasDrag, [
             cond(lessThan(dragY, -20), call([], function () { return hideNotify(); })),
             set(prevDragY, 0),
-            //cond(not(fullState), set(heightAnimation, runTiming(clockHeight)({ lastVal: heightAnimation, toValue: new Animated.Value(height), duration: 300 }))),
             set(transY, cond(defined(transY), runSpring(clock, transY, dragVY, snapPoint, close), 0)),
         ], transY)
     ]); }, [height]);
