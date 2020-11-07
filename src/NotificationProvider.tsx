@@ -16,7 +16,7 @@ const NotificationProvider: React.FC<Props> = ({ children, ...props }) => {
     return (
         <NotificationContext.Provider
             value={{
-                dispatch: dispatch.current,
+                dispatch: (...args)=>dispatch.current(...args),
             }}
         >
             <View style={{ flex: 1 }}>

@@ -28,7 +28,13 @@ var NotificationProvider = function (_a) {
     var children = _a.children, props = __rest(_a, ["children"]);
     var dispatch = useRef(function () { });
     return (React.createElement(NotificationContext.Provider, { value: {
-            dispatch: dispatch.current,
+            dispatch: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return dispatch.current.apply(dispatch, args);
+            },
         } },
         React.createElement(View, { style: { flex: 1 } }, children),
         React.createElement(NotificationsContainer, __assign({ onSetDispatch: function (f) { return dispatch.current = f; } }, props))));

@@ -52,7 +52,13 @@ define(["require", "exports", "react", "react-native", "./NotificationContext", 
         var children = _a.children, props = __rest(_a, ["children"]);
         var dispatch = react_1.useRef(function () { });
         return (react_1.default.createElement(NotificationContext_1.default.Provider, { value: {
-                dispatch: dispatch.current,
+                dispatch: function () {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    return dispatch.current.apply(dispatch, args);
+                },
             } },
             react_1.default.createElement(react_native_1.View, { style: { flex: 1 } }, children),
             react_1.default.createElement(NotificationsContainer_1.default, __assign({ onSetDispatch: function (f) { return dispatch.current = f; } }, props))));
