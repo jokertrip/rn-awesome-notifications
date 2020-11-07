@@ -45,45 +45,46 @@ var Notification = function (_a) {
     var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
     var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
     var Container = Platform.OS === 'ios' ? BlurView : View;
-    return (React.createElement(View, { style: styles.root },
-        React.createElement(Container, { style: styles.blur, blurType: "xlight" },
-            React.createElement(View, { style: styles.main, collapsable: false },
-                type && React.createElement(View, { style: styles.iconContainer },
-                    React.createElement(Image, { source: icons[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
-                (data === null || data === void 0 ? void 0 : data.icon) && React.createElement(Image, { source: data === null || data === void 0 ? void 0 : data.icon, style: styles.image }),
-                React.createElement(View, { style: [
-                        styles.stretchContainer,
-                        styles.messageContainer
-                    ] },
-                    React.createElement(Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
-                    React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
-                            if ((e.nativeEvent.layout.height > 30)) {
-                                setState(true);
-                            }
-                        } }, message)),
-                ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
-                    var title = _a.title, onPress = _a.onPress;
-                    var key = typeof title === "string" ? title : String(i);
-                    return (React.createElement(TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        if (!(e.nativeEvent.state == State.END && !loading)) return [3 /*break*/, 2];
-                                        setLoaderState(key);
-                                        return [4 /*yield*/, onPress()];
-                                    case 1:
-                                        _a.sent();
-                                        close();
-                                        _a.label = 2;
-                                    case 2: return [2 /*return*/];
+    return (React.createElement(View, { style: { flex: 1, alignItems: "center" } },
+        React.createElement(View, { style: styles.root },
+            React.createElement(Container, { style: styles.blur, blurType: "xlight" },
+                React.createElement(View, { style: styles.main, collapsable: false },
+                    type && React.createElement(View, { style: styles.iconContainer },
+                        React.createElement(Image, { source: icons[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
+                    (data === null || data === void 0 ? void 0 : data.icon) && React.createElement(Image, { source: data === null || data === void 0 ? void 0 : data.icon, style: styles.image }),
+                    React.createElement(View, { style: [
+                            styles.stretchContainer,
+                            styles.messageContainer
+                        ] },
+                        React.createElement(Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
+                        React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
+                                if ((e.nativeEvent.layout.height > 30)) {
+                                    setState(true);
                                 }
-                            });
-                        }); } },
-                        React.createElement(View, { style: styles.button },
-                            loading === key && React.createElement(ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
-                            loading !== key &&
-                                React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
-                })))));
+                            } }, message)),
+                    ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
+                        var title = _a.title, onPress = _a.onPress;
+                        var key = typeof title === "string" ? title : String(i);
+                        return (React.createElement(TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(e.nativeEvent.state == State.END && !loading)) return [3 /*break*/, 2];
+                                            setLoaderState(key);
+                                            return [4 /*yield*/, onPress()];
+                                        case 1:
+                                            _a.sent();
+                                            close();
+                                            _a.label = 2;
+                                        case 2: return [2 /*return*/];
+                                    }
+                                });
+                            }); } },
+                            React.createElement(View, { style: styles.button },
+                                loading === key && React.createElement(ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
+                                loading !== key &&
+                                    React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
+                    }))))));
 };
 export default Notification;
 function getContainerWidth() {

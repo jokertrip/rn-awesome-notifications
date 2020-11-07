@@ -16,91 +16,92 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
     const Container: any = Platform.OS === 'ios' ? BlurView : View;
 
     return (
-        <View style={styles.root}>
-            <Container style={styles.blur} blurType={"xlight"}>
+        <View style={{flex: 1, alignItems: "center"}}>
+            <View style={styles.root}>
+                <Container style={styles.blur} blurType={"xlight"}>
 
-                <View style={styles.main} collapsable={false}>
-                    {
-                        type && <View style={styles.iconContainer}>
-                            <Image
-                                source={icons[type]}
-                                style={{ width: 30, height: 30, marginRight: 10, }}
-                                resizeMode={"contain"}
+                    <View style={styles.main} collapsable={false}>
+                        {
+                            type && <View style={styles.iconContainer}>
+                                <Image
+                                    source={icons[type]}
+                                    style={{ width: 30, height: 30, marginRight: 10, }}
+                                    resizeMode={"contain"}
+                                />
+                            </View>
+                        }
+                        {
+                            data?.icon && <Image
+                                source={data?.icon}
+                                style={styles.image}
                             />
+                        }
+
+                        <View
+                            style={[
+                                styles.stretchContainer,
+                                styles.messageContainer
+                            ]}
+                        >
+                            <Text allowFontScaling={false} numberOfLines={2} style={{ fontWeight: "bold", color: "#4b4b4b" }}>{title}</Text>
+                            <Text
+                                allowFontScaling={false}
+                                style={{ color: "#4b4b4b" }}
+                                onLayout={(e) => {
+                                    if ((e.nativeEvent.layout.height > 30)) {
+                                        setState(true)
+                                    }
+                                }}
+
+                            >{message}</Text>
                         </View>
-                    }
-                    {
-                        data?.icon && <Image
-                            source={data?.icon}
-                            style={styles.image}
-                        />
-                    }
+                        {
+                            (data?.buttons || []).map(({ title, onPress }, i) => {
+                                const key = typeof title === "string" ? title : String(i);
+                                return (
+                                    <TapGestureHandler
+                                        key={key}
+                                        onHandlerStateChange={async (e) => {
+                                            if (e.nativeEvent.state == State.END && !loading) {
+                                                setLoaderState(key);
+                                                await onPress();
+                                                close();
+                                            }
+                                        }}
+                                    >
+                                        <View style={styles.button}>
+                                            {
+                                                loading === key && <ActivityIndicator size={"small"} color={"gray"} collapsable={false} />
+                                            }
+                                            {
+                                                loading !== key &&
+                                                <Text
+                                                    allowFontScaling={false}
+                                                    style={{ color: "#4b4b4b", opacity: loading ? .3 : 1 }}
+                                                >
+                                                    {title}
+                                                </Text>
+                                            }
+                                        </View>
+                                    </TapGestureHandler>
 
-                    <View
-                        style={[
-                            styles.stretchContainer,
-                            styles.messageContainer
-                        ]}
-                    >
-                        <Text allowFontScaling={false} numberOfLines={2} style={{ fontWeight: "bold", color: "#4b4b4b" }}>{title}</Text>
-                        <Text
-                            allowFontScaling={false}
-                            style={{ color: "#4b4b4b" }}
-                            onLayout={(e) => {
-                                if ((e.nativeEvent.layout.height > 30)) {
-                                    setState(true)
-                                }
-                            }}
-                           
-                        >{message}</Text>
+                                )
+                            })
+                        }
+
+
                     </View>
-                    {
-                        (data?.buttons || []).map(({ title, onPress }, i) => {
-                            const key = typeof title === "string" ? title : String(i);
-                            return (
-                                <TapGestureHandler
-                                    key={key}
-                                    onHandlerStateChange={async (e) => {
-                                        if (e.nativeEvent.state == State.END && !loading) {
-                                            setLoaderState(key);
-                                            await onPress();
-                                            close();
-                                        }
-                                    }}
-                                >
-                                    <View style={styles.button}>
-                                        {
-                                            loading === key && <ActivityIndicator size={"small"} color={"gray"} collapsable={false} />
-                                        }
-                                        {
-                                            loading !== key &&
-                                            <Text
-                                                allowFontScaling={false}
-                                                style={{ color: "#4b4b4b", opacity: loading ? .3 : 1 }}
-                                            >
-                                                {title}
-                                            </Text>
-                                        }
-                                    </View>
-                                </TapGestureHandler>
-
-                            )
-                        })
-                    }
-
-
-                </View>
-            </Container>
+                </Container>
+            </View>
         </View>
-
     )
 }
 
 export default Notification;
 
 
-function getContainerWidth(){
-    if(screen.width < screen.height) return screen.width;
+function getContainerWidth() {
+    if (screen.width < screen.height) return screen.width;
     return screen.height;
 }
 
@@ -123,7 +124,7 @@ const styles = StyleSheet.create<{
         shadowColor: 'black',
         shadowOpacity: .1,
         shadowRadius: 10,
-        backgroundColor: Platform.select({ios:"transparent", default: "white"}),
+        backgroundColor: Platform.select({ ios: "transparent", default: "white" }),
         width: getContainerWidth() - 20
     },
     blur: {

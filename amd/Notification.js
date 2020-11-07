@@ -67,45 +67,46 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
         var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
         var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
-        return (React.createElement(react_native_1.View, { style: styles.root },
-            React.createElement(Container, { style: styles.blur, blurType: "xlight" },
-                React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
-                    type && React.createElement(react_native_1.View, { style: styles.iconContainer },
-                        React.createElement(react_native_1.Image, { source: icons_1.default[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
-                    (data === null || data === void 0 ? void 0 : data.icon) && React.createElement(react_native_1.Image, { source: data === null || data === void 0 ? void 0 : data.icon, style: styles.image }),
-                    React.createElement(react_native_1.View, { style: [
-                            styles.stretchContainer,
-                            styles.messageContainer
-                        ] },
-                        React.createElement(react_native_1.Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
-                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
-                                if ((e.nativeEvent.layout.height > 30)) {
-                                    setState(true);
-                                }
-                            } }, message)),
-                    ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
-                        var title = _a.title, onPress = _a.onPress;
-                        var key = typeof title === "string" ? title : String(i);
-                        return (React.createElement(react_native_gesture_handler_1.TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0:
-                                            if (!(e.nativeEvent.state == react_native_gesture_handler_1.State.END && !loading)) return [3 /*break*/, 2];
-                                            setLoaderState(key);
-                                            return [4 /*yield*/, onPress()];
-                                        case 1:
-                                            _a.sent();
-                                            close();
-                                            _a.label = 2;
-                                        case 2: return [2 /*return*/];
+        return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
+            React.createElement(react_native_1.View, { style: styles.root },
+                React.createElement(Container, { style: styles.blur, blurType: "xlight" },
+                    React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
+                        type && React.createElement(react_native_1.View, { style: styles.iconContainer },
+                            React.createElement(react_native_1.Image, { source: icons_1.default[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
+                        (data === null || data === void 0 ? void 0 : data.icon) && React.createElement(react_native_1.Image, { source: data === null || data === void 0 ? void 0 : data.icon, style: styles.image }),
+                        React.createElement(react_native_1.View, { style: [
+                                styles.stretchContainer,
+                                styles.messageContainer
+                            ] },
+                            React.createElement(react_native_1.Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
+                            React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
+                                    if ((e.nativeEvent.layout.height > 30)) {
+                                        setState(true);
                                     }
-                                });
-                            }); } },
-                            React.createElement(react_native_1.View, { style: styles.button },
-                                loading === key && React.createElement(react_native_1.ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
-                                loading !== key &&
-                                    React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
-                    })))));
+                                } }, message)),
+                        ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
+                            var title = _a.title, onPress = _a.onPress;
+                            var key = typeof title === "string" ? title : String(i);
+                            return (React.createElement(react_native_gesture_handler_1.TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!(e.nativeEvent.state == react_native_gesture_handler_1.State.END && !loading)) return [3 /*break*/, 2];
+                                                setLoaderState(key);
+                                                return [4 /*yield*/, onPress()];
+                                            case 1:
+                                                _a.sent();
+                                                close();
+                                                _a.label = 2;
+                                            case 2: return [2 /*return*/];
+                                        }
+                                    });
+                                }); } },
+                                React.createElement(react_native_1.View, { style: styles.button },
+                                    loading === key && React.createElement(react_native_1.ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
+                                    loading !== key &&
+                                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
+                        }))))));
     };
     exports.default = Notification;
     function getContainerWidth() {
