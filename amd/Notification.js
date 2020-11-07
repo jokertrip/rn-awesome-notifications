@@ -56,16 +56,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "react", "@react-native-community/blur", "react-native", "react-native-gesture-handler", "./icons"], function (require, exports, React, blur_1, react_native_1, react_native_gesture_handler_1, icons_1) {
+define(["require", "exports", "@react-native-community/blur", "react", "react-native", "react-native-gesture-handler", "./icons"], function (require, exports, blur_1, React, react_native_1, react_native_gesture_handler_1, icons_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     React = __importStar(React);
     icons_1 = __importDefault(icons_1);
+    var screen = react_native_1.Dimensions.get("window");
     var Notification = function (_a) {
         var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, heightAnimation = _a.heightAnimation;
-        var _b = React.useState(2), numRows = _b[0], setNumRows = _b[1];
-        var _c = React.useState(false), longMessage = _c[0], setState = _c[1];
-        var _d = React.useState(""), loading = _d[0], setLoaderState = _d[1];
+        var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
+        var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
         return (React.createElement(react_native_1.View, { style: styles.root },
             React.createElement(Container, { style: styles.blur, blurType: "xlight" },
@@ -106,22 +106,13 @@ define(["require", "exports", "react", "@react-native-community/blur", "react-na
                                 loading !== key &&
                                     React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
                     })))));
-        // return (
-        //     <View style={{ padding: 10, paddingBottom: 5, flex: 1 }}>
-        //         <View style={styles.root}>
-        //             <BlurView
-        //                 style={{ flex: 1 }}
-        //                 blurType="dark"
-        //             >
-        //                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        //                     <Text>{message}</Text>
-        //                 </View>
-        //             </BlurView>
-        //         </View>
-        //     </View>
-        // )
     };
     exports.default = Notification;
+    function getContainerWidth() {
+        if (screen.width < screen.height)
+            return screen.width;
+        return screen.height;
+    }
     var styles = react_native_1.StyleSheet.create({
         root: {
             flex: 1,
@@ -133,7 +124,7 @@ define(["require", "exports", "react", "@react-native-community/blur", "react-na
             shadowOpacity: .1,
             shadowRadius: 10,
             backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "white" }),
-            marginHorizontal: 10
+            width: getContainerWidth() - 20
         },
         blur: {
             flex: 1,

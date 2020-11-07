@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NotificationParams, NotificationActions } from "./types";
+import { NotificationActions, NotificationParams } from "./types";
 export declare type NotificationExtra = {
     icon?: any;
     buttons?: {

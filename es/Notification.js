@@ -34,16 +34,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import * as React from "react";
 import { BlurView } from "@react-native-community/blur";
-import { View, Text, StyleSheet, Image, ActivityIndicator, Platform } from "react-native";
-import { TapGestureHandler, State } from "react-native-gesture-handler";
+import * as React from "react";
+import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
+import { State, TapGestureHandler } from "react-native-gesture-handler";
 import icons from "./icons";
+var screen = Dimensions.get("window");
 var Notification = function (_a) {
     var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, heightAnimation = _a.heightAnimation;
-    var _b = React.useState(2), numRows = _b[0], setNumRows = _b[1];
-    var _c = React.useState(false), longMessage = _c[0], setState = _c[1];
-    var _d = React.useState(""), loading = _d[0], setLoaderState = _d[1];
+    var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
+    var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
     var Container = Platform.OS === 'ios' ? BlurView : View;
     return (React.createElement(View, { style: styles.root },
         React.createElement(Container, { style: styles.blur, blurType: "xlight" },
@@ -84,22 +84,13 @@ var Notification = function (_a) {
                             loading !== key &&
                                 React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
                 })))));
-    // return (
-    //     <View style={{ padding: 10, paddingBottom: 5, flex: 1 }}>
-    //         <View style={styles.root}>
-    //             <BlurView
-    //                 style={{ flex: 1 }}
-    //                 blurType="dark"
-    //             >
-    //                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    //                     <Text>{message}</Text>
-    //                 </View>
-    //             </BlurView>
-    //         </View>
-    //     </View>
-    // )
 };
 export default Notification;
+function getContainerWidth() {
+    if (screen.width < screen.height)
+        return screen.width;
+    return screen.height;
+}
 var styles = StyleSheet.create({
     root: {
         flex: 1,
@@ -111,7 +102,7 @@ var styles = StyleSheet.create({
         shadowOpacity: .1,
         shadowRadius: 10,
         backgroundColor: Platform.select({ ios: "transparent", default: "white" }),
-        marginHorizontal: 10
+        width: getContainerWidth() - 20
     },
     blur: {
         flex: 1,

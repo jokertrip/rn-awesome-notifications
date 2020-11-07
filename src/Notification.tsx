@@ -1,14 +1,15 @@
-import * as React from "react";
 import { BlurView } from "@react-native-community/blur";
-import { View, Text, StyleSheet, Image, ActivityIndicator, ViewStyle, ImageStyle, Platform } from "react-native";
-import { NotificationParams, NotificationActions } from "./types";
-import { TouchableOpacity, TapGestureHandler, State } from "react-native-gesture-handler";
+import * as React from "react";
+import { ActivityIndicator, Dimensions, Image, ImageStyle, Platform, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { State, TapGestureHandler } from "react-native-gesture-handler";
 import icons from "./icons";
+import { NotificationActions, NotificationParams } from "./types";
+
+const screen = Dimensions.get("window");
 
 export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => {} }[] }
 
 const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, heightAnimation }) => {
-    const [numRows, setNumRows] = React.useState(2);
     const [longMessage, setState] = React.useState(false);
     const [loading, setLoaderState] = React.useState("");
 
@@ -93,23 +94,15 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
         </View>
 
     )
-    // return (
-    //     <View style={{ padding: 10, paddingBottom: 5, flex: 1 }}>
-    //         <View style={styles.root}>
-    //             <BlurView
-    //                 style={{ flex: 1 }}
-    //                 blurType="dark"
-    //             >
-    //                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    //                     <Text>{message}</Text>
-    //                 </View>
-    //             </BlurView>
-    //         </View>
-    //     </View>
-    // )
 }
 
 export default Notification;
+
+
+function getContainerWidth(){
+    if(screen.width < screen.height) return screen.width;
+    return screen.height;
+}
 
 const styles = StyleSheet.create<{
     root: ViewStyle,
@@ -131,7 +124,7 @@ const styles = StyleSheet.create<{
         shadowOpacity: .1,
         shadowRadius: 10,
         backgroundColor: Platform.select({ios:"transparent", default: "white"}),
-        marginHorizontal: 10
+        width: getContainerWidth() - 20
     },
     blur: {
         flex: 1,
