@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dimensions, Platform, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { PanGestureHandler, State as GestureState, TapGestureHandler } from "react-native-gesture-handler";
-import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not } from "react-native-reanimated";
+import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not, and } from "react-native-reanimated";
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
 import { CloseButtonProps, NotificationActions, NotificationParams, NotificationType } from "./types";
@@ -53,7 +53,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
 
         const dragY = useValue(0);
         const state = useValue(-1);
-
+        const lastState = useValue(-1);
 
         const dragVY = useValue(0);
 
@@ -208,8 +208,17 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                     <Animated.Code>
                         {() =>
                             block([
-                                eq(not(state), -1),
-                                call([], () => clearTimeout(timer.current)),
+                                cond(
+                                    and(
+                                        not(eq(state, -1)),
+                                        eq(lastState, -1)
+                                    ),
+                                    [
+                                        call([], () => clearTimeout(timer.current)),
+                                        set(lastState, state)
+                                    ]
+                                )
+
                             ])
                         }
                     </Animated.Code>

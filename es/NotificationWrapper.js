@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import { PanGestureHandler, State as GestureState, TapGestureHandler } from "react-native-gesture-handler";
-import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not } from "react-native-reanimated";
+import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not, and } from "react-native-reanimated";
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
 import { NotificationType } from "./types";
@@ -25,6 +25,7 @@ var Notification = function (_a) {
     var timer = React.useRef(null);
     var dragY = useValue(0);
     var state = useValue(-1);
+    var lastState = useValue(-1);
     var dragVY = useValue(0);
     var top = useValue(topOffset);
     var transY = new Value(-screen.height);
@@ -142,8 +143,10 @@ var Notification = function (_a) {
             ] },
             React.createElement(Animated.Code, null, function () {
                 return block([
-                    eq(not(state), -1),
-                    call([], function () { return clearTimeout(timer.current); }),
+                    cond(and(not(eq(state, -1)), eq(lastState, -1)), [
+                        call([], function () { return clearTimeout(timer.current); }),
+                        set(lastState, state)
+                    ])
                 ]);
             }),
             React.createElement(TapGestureHandler, { onHandlerStateChange: function (e) {
