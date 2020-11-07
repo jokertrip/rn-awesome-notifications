@@ -42,52 +42,20 @@ var __rest = (this && this.__rest) || function (s, e) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "react", "react-native", "./NotificationContext", "./NotificationWrapper", "./useNotificationState"], function (require, exports, react_1, react_native_1, NotificationContext_1, NotificationWrapper_1, useNotificationState_1) {
+define(["require", "exports", "react", "react-native", "./NotificationContext", "./NotificationsContainer"], function (require, exports, react_1, react_native_1, NotificationContext_1, NotificationsContainer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     react_1 = __importStar(react_1);
     NotificationContext_1 = __importDefault(NotificationContext_1);
-    NotificationWrapper_1 = __importDefault(NotificationWrapper_1);
-    useNotificationState_1 = __importStar(useNotificationState_1);
+    NotificationsContainer_1 = __importDefault(NotificationsContainer_1);
     var NotificationProvider = function (_a) {
-        var children = _a.children, _b = _a.showingCountInMoment, showingCountInMoment = _b === void 0 ? 3 : _b, vibration = _a.vibration, other = __rest(_a, ["children", "showingCountInMoment", "vibration"]);
-        var _c = useNotificationState_1.default(), state = _c[0], disp = _c[1];
-        var dispatch = react_1.useCallback(function (a) {
-            if (vibration) {
-                react_native_1.Vibration.vibrate(200);
-            }
-            disp(a);
-        }, [vibration]);
-        var notifyRefs = react_1.useRef({});
-        var notifications = Object.keys(state.notifications);
-        var Children = react_1.useMemo(function () { return (react_1.default.createElement(react_native_1.View, { style: { flex: 1 } }, children)); }, []);
-        var notificationsLength = notifications.length - 1;
+        var children = _a.children, props = __rest(_a, ["children"]);
+        var dispatch = react_1.useRef(function () { });
         return (react_1.default.createElement(NotificationContext_1.default.Provider, { value: {
-                dispatch: dispatch,
+                dispatch: dispatch.current,
             } },
-            Children,
-            notifications.map(function (id, index) {
-                var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
-                return (react_1.default.createElement(NotificationWrapper_1.default, __assign({ key: id, onClose: function (height) {
-                        if (!notifyRefs.current[id])
-                            return;
-                        notifications.forEach(function (key, i) {
-                            if (i < index) {
-                                notifyRefs.current[key] && notifyRefs.current[key](-height);
-                            }
-                        });
-                        delete notifyRefs.current[id];
-                        dispatch({
-                            type: useNotificationState_1.NotificationsActions.remove,
-                            id: id
-                        });
-                    }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
-                        Object.values(notifyRefs.current).forEach(function (item) {
-                            item(height);
-                        });
-                        notifyRefs.current[id] = setOffsetTop;
-                    } }, other, state.notifications[id])));
-            })));
+            react_1.default.createElement(react_native_1.View, { style: { flex: 1 } }, children),
+            react_1.default.createElement(NotificationsContainer_1.default, __assign({ onSetDispatch: function (f) { return dispatch.current = f; } }, props))));
     };
     exports.default = NotificationProvider;
 });

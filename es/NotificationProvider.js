@@ -20,49 +20,17 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import React, { useCallback, useMemo, useRef } from "react";
-import { Vibration, View } from "react-native";
+import React, { useRef } from "react";
+import { View } from "react-native";
 import NotificationContext from "./NotificationContext";
-import Notification from "./NotificationWrapper";
-import useNotificationState, { NotificationsActions } from "./useNotificationState";
+import NotificationsContainer from "./NotificationsContainer";
 var NotificationProvider = function (_a) {
-    var children = _a.children, _b = _a.showingCountInMoment, showingCountInMoment = _b === void 0 ? 3 : _b, vibration = _a.vibration, other = __rest(_a, ["children", "showingCountInMoment", "vibration"]);
-    var _c = useNotificationState(), state = _c[0], disp = _c[1];
-    var dispatch = useCallback(function (a) {
-        if (vibration) {
-            Vibration.vibrate(200);
-        }
-        disp(a);
-    }, [vibration]);
-    var notifyRefs = useRef({});
-    var notifications = Object.keys(state.notifications);
-    var Children = useMemo(function () { return (React.createElement(View, { style: { flex: 1 } }, children)); }, []);
-    var notificationsLength = notifications.length - 1;
+    var children = _a.children, props = __rest(_a, ["children"]);
+    var dispatch = useRef(function () { });
     return (React.createElement(NotificationContext.Provider, { value: {
-            dispatch: dispatch,
+            dispatch: dispatch.current,
         } },
-        Children,
-        notifications.map(function (id, index) {
-            var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
-            return (React.createElement(Notification, __assign({ key: id, onClose: function (height) {
-                    if (!notifyRefs.current[id])
-                        return;
-                    notifications.forEach(function (key, i) {
-                        if (i < index) {
-                            notifyRefs.current[key] && notifyRefs.current[key](-height);
-                        }
-                    });
-                    delete notifyRefs.current[id];
-                    dispatch({
-                        type: NotificationsActions.remove,
-                        id: id
-                    });
-                }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
-                    Object.values(notifyRefs.current).forEach(function (item) {
-                        item(height);
-                    });
-                    notifyRefs.current[id] = setOffsetTop;
-                } }, other, state.notifications[id])));
-        })));
+        React.createElement(View, { style: { flex: 1 } }, children),
+        React.createElement(NotificationsContainer, __assign({ onSetDispatch: function (f) { return dispatch.current = f; } }, props))));
 };
 export default NotificationProvider;
