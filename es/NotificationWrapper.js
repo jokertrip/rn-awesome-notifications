@@ -109,12 +109,6 @@ var Notification = function (_a) {
         { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
     ]);
     return (React.createElement(PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
-        React.createElement(Animated.Code, null, function () {
-            return block([
-                eq(not(state), -1),
-                call([], function () { return clearTimeout(timer.current); }),
-            ]);
-        }),
         React.createElement(Animated.View, { onLayout: function (e) {
                 if (!height) {
                     var height_1 = e.nativeEvent.layout.height;
@@ -146,6 +140,12 @@ var Notification = function (_a) {
                     transform: [{ translateY: translateY, scale: scale }],
                 }
             ] },
+            React.createElement(Animated.Code, null, function () {
+                return block([
+                    eq(not(state), -1),
+                    call([], function () { return clearTimeout(timer.current); }),
+                ]);
+            }),
             React.createElement(TapGestureHandler, { onHandlerStateChange: function (e) {
                     clearTimeout(timer.current);
                     if (e.nativeEvent.state === GestureState.END) {

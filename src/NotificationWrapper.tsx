@@ -170,14 +170,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                 onHandlerStateChange={onGestureEvent}
                 activeOffsetY={[-15, 15]}
             >
-                <Animated.Code>
-                    {() =>
-                        block([
-                            eq(not(state), -1),
-                            call([], () => clearTimeout(timer.current)),
-                        ])
-                    }
-                </Animated.Code>
                 <Animated.View
                     onLayout={(e) => {
                         if (!height) {
@@ -213,6 +205,14 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                         }
                     ]}
                 >
+                    <Animated.Code>
+                        {() =>
+                            block([
+                                eq(not(state), -1),
+                                call([], () => clearTimeout(timer.current)),
+                            ])
+                        }
+                    </Animated.Code>
                     <TapGestureHandler
                         onHandlerStateChange={(e) => {
                             clearTimeout(timer.current)

@@ -62,33 +62,32 @@ define(["require", "exports", "react", "react-native", "./NotificationContext", 
         var notifications = Object.keys(state.notifications);
         var Children = react_1.useMemo(function () { return (react_1.default.createElement(react_native_1.View, { style: { flex: 1 } }, children)); }, []);
         var notificationsLength = notifications.length - 1;
-        return (react_1.default.createElement(react_native_1.View, { style: { flex: 1 } },
-            react_1.default.createElement(NotificationContext_1.default.Provider, { value: {
-                    dispatch: dispatch,
-                } },
-                Children,
-                notifications.map(function (id, index) {
-                    var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
-                    return (react_1.default.createElement(NotificationWrapper_1.default, __assign({ key: id, onClose: function (height) {
-                            if (!notifyRefs.current[id])
-                                return;
-                            notifications.forEach(function (key, i) {
-                                if (i < index) {
-                                    notifyRefs.current[key] && notifyRefs.current[key](-height);
-                                }
-                            });
-                            delete notifyRefs.current[id];
-                            dispatch({
-                                type: useNotificationState_1.NotificationsActions.remove,
-                                id: id
-                            });
-                        }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
-                            Object.values(notifyRefs.current).forEach(function (item) {
-                                item(height);
-                            });
-                            notifyRefs.current[id] = setOffsetTop;
-                        } }, other, state.notifications[id])));
-                }))));
+        return (react_1.default.createElement(NotificationContext_1.default.Provider, { value: {
+                dispatch: dispatch,
+            } },
+            Children,
+            notifications.map(function (id, index) {
+                var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
+                return (react_1.default.createElement(NotificationWrapper_1.default, __assign({ key: id, onClose: function (height) {
+                        if (!notifyRefs.current[id])
+                            return;
+                        notifications.forEach(function (key, i) {
+                            if (i < index) {
+                                notifyRefs.current[key] && notifyRefs.current[key](-height);
+                            }
+                        });
+                        delete notifyRefs.current[id];
+                        dispatch({
+                            type: useNotificationState_1.NotificationsActions.remove,
+                            id: id
+                        });
+                    }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
+                        Object.values(notifyRefs.current).forEach(function (item) {
+                            item(height);
+                        });
+                        notifyRefs.current[id] = setOffsetTop;
+                    } }, other, state.notifications[id])));
+            })));
     };
     exports.default = NotificationProvider;
 });

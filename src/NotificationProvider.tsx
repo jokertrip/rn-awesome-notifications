@@ -10,12 +10,12 @@ const NotificationProvider: React.FC<Props> = ({ children, showingCountInMoment 
 
     const [state, disp] = useNotificationState();
 
-    const dispatch = useCallback((a) => {
-        if (vibration) {
+    const dispatch = useCallback((a)=>{
+        if(vibration){
             Vibration.vibrate(200);
         }
         disp(a);
-    }, [vibration])
+    },[vibration])
 
     const notifyRefs = useRef<Record<string, any>>({});
 
@@ -32,52 +32,49 @@ const NotificationProvider: React.FC<Props> = ({ children, showingCountInMoment 
 
 
     return (
-        <View style={{ flex: 1 }}>
-            <NotificationContext.Provider
-                value={{
-                    dispatch,
-                }}
-            >
-                {Children}
-                {
-                    notifications.map((id, index) => {
-                        const offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
+        <NotificationContext.Provider
+            value={{
+                dispatch,
+            }}
+        >
+           {Children}
+            {
+                notifications.map((id, index) => {
+                    const offsetIndex =  index > notificationsLength - showingCountInMoment? notificationsLength - index : -1;
 
-                        return (
-                            <Notification
-                                key={id}
-                                onClose={(height) => {
-                                    if (!notifyRefs.current[id]) return;
-                                    notifications.forEach((key, i) => {
-                                        if (i < index) {
-                                            notifyRefs.current[key] && notifyRefs.current[key](-height)
-                                        }
-                                    })
-                                    delete notifyRefs.current[id];
-                                    dispatch({
-                                        type: NotificationsActions.remove,
-                                        id
-                                    })
-                                }}
-                                id={id}
-                                offset={offsetIndex}
-                                onLayout={(height, setOffsetTop) => {
-                                    Object.values(notifyRefs.current).forEach((item) => {
-                                        item(height);
-                                    })
-                                    notifyRefs.current[id] = setOffsetTop
-                                }}
-                                {...other}
-                                {...state.notifications[id]}
-                            />
-                        )
-                    })
+                    return (
+                        <Notification
+                            key={id}
+                            onClose={(height) => {
+                                if(!notifyRefs.current[id]) return;
+                                notifications.forEach((key, i)=>{
+                                    if(i < index){
+                                        notifyRefs.current[key] && notifyRefs.current[key](-height)
+                                    }
+                                })
+                                delete notifyRefs.current[id];
+                                dispatch({
+                                    type: NotificationsActions.remove,
+                                    id
+                                })
+                            }}
+                            id={id}
+                            offset={ offsetIndex }
+                            onLayout={(height, setOffsetTop)=>{
+                                Object.values(notifyRefs.current).forEach((item)=>{
+                                    item(height);
+                                })
+                                notifyRefs.current[id] = setOffsetTop
+                            }}
+                            {...other}
+                            {...state.notifications[id]}
+                        />
+                    )
+                })
 
-                }
+            }
 
-            </NotificationContext.Provider>
-        </View>
-
+        </NotificationContext.Provider>
     )
 }
 

@@ -38,32 +38,31 @@ var NotificationProvider = function (_a) {
     var notifications = Object.keys(state.notifications);
     var Children = useMemo(function () { return (React.createElement(View, { style: { flex: 1 } }, children)); }, []);
     var notificationsLength = notifications.length - 1;
-    return (React.createElement(View, { style: { flex: 1 } },
-        React.createElement(NotificationContext.Provider, { value: {
-                dispatch: dispatch,
-            } },
-            Children,
-            notifications.map(function (id, index) {
-                var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
-                return (React.createElement(Notification, __assign({ key: id, onClose: function (height) {
-                        if (!notifyRefs.current[id])
-                            return;
-                        notifications.forEach(function (key, i) {
-                            if (i < index) {
-                                notifyRefs.current[key] && notifyRefs.current[key](-height);
-                            }
-                        });
-                        delete notifyRefs.current[id];
-                        dispatch({
-                            type: NotificationsActions.remove,
-                            id: id
-                        });
-                    }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
-                        Object.values(notifyRefs.current).forEach(function (item) {
-                            item(height);
-                        });
-                        notifyRefs.current[id] = setOffsetTop;
-                    } }, other, state.notifications[id])));
-            }))));
+    return (React.createElement(NotificationContext.Provider, { value: {
+            dispatch: dispatch,
+        } },
+        Children,
+        notifications.map(function (id, index) {
+            var offsetIndex = index > notificationsLength - showingCountInMoment ? notificationsLength - index : -1;
+            return (React.createElement(Notification, __assign({ key: id, onClose: function (height) {
+                    if (!notifyRefs.current[id])
+                        return;
+                    notifications.forEach(function (key, i) {
+                        if (i < index) {
+                            notifyRefs.current[key] && notifyRefs.current[key](-height);
+                        }
+                    });
+                    delete notifyRefs.current[id];
+                    dispatch({
+                        type: NotificationsActions.remove,
+                        id: id
+                    });
+                }, id: id, offset: offsetIndex, onLayout: function (height, setOffsetTop) {
+                    Object.values(notifyRefs.current).forEach(function (item) {
+                        item(height);
+                    });
+                    notifyRefs.current[id] = setOffsetTop;
+                } }, other, state.notifications[id])));
+        })));
 };
 export default NotificationProvider;

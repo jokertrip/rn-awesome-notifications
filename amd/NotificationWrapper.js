@@ -130,12 +130,6 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
         return (React.createElement(react_native_gesture_handler_1.PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
-            React.createElement(react_native_reanimated_1.default.Code, null, function () {
-                return react_native_reanimated_1.block([
-                    react_native_reanimated_1.eq(react_native_reanimated_1.not(state), -1),
-                    react_native_reanimated_1.call([], function () { return clearTimeout(timer.current); }),
-                ]);
-            }),
             React.createElement(react_native_reanimated_1.default.View, { onLayout: function (e) {
                     if (!height) {
                         var height_1 = e.nativeEvent.layout.height;
@@ -167,6 +161,12 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
                         transform: [{ translateY: translateY, scale: scale }],
                     }
                 ] },
+                React.createElement(react_native_reanimated_1.default.Code, null, function () {
+                    return react_native_reanimated_1.block([
+                        react_native_reanimated_1.eq(react_native_reanimated_1.not(state), -1),
+                        react_native_reanimated_1.call([], function () { return clearTimeout(timer.current); }),
+                    ]);
+                }),
                 React.createElement(react_native_gesture_handler_1.TapGestureHandler, { onHandlerStateChange: function (e) {
                         clearTimeout(timer.current);
                         if (e.nativeEvent.state === react_native_gesture_handler_1.State.END) {
