@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -20,25 +31,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "react", "react-native", "react-native-gesture-handler", "react-native-reanimated", "./animations", "./iPhoneHelper", "./types"], function (require, exports, React, react_native_1, react_native_gesture_handler_1, react_native_reanimated_1, animations_1, iPhoneHelper_1, types_1) {
+define(["require", "exports", "react", "react-native", "react-native-gesture-handler", "react-native-reanimated", "./animations", "./iPhoneHelper", "./Notification", "./types"], function (require, exports, React, react_native_1, react_native_gesture_handler_1, react_native_reanimated_1, animations_1, iPhoneHelper_1, Notification_1, types_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     React = __importStar(React);
     react_native_reanimated_1 = __importStar(react_native_reanimated_1);
     iPhoneHelper_1 = __importDefault(iPhoneHelper_1);
+    Notification_1 = __importDefault(Notification_1);
     var screen = react_native_1.Dimensions.get("screen");
     var TOSS_SEC = 5;
     var offsetFullMode = 200;
     var topOffset = react_native_1.Platform.select({ ios: iPhoneHelper_1.default.isIphoneX() ? 45 : 20, default: 0 });
     var Notification = function (_a) {
-        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, 
-        // renderCloseButton,
-        onLayout = _a.onLayout;
+        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
         var lastOffsetTop = React.useRef(0);
         var scale = react_native_reanimated_1.useValue(1);
         var _c = React.useState(0), height = _c[0], setHeight = _c[1];
         var fullHeight = offsetFullMode + height;
-        // const heightAnimation = useValue(height);
         var _d = React.useState(false), fullMode = _d[0], setFullState = _d[1];
         var fullState = react_native_reanimated_1.useValue(0);
         var timer = React.useRef(null);
@@ -60,11 +69,6 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
         var close = React.useMemo(function () {
             return react_native_reanimated_1.block([]);
         }, []);
-        // const close = React.useMemo(() => {
-        //     return cond(lessThan(transY, -20), [
-        //         call([], () => hideNotify())
-        //     ])
-        // }, [])
         var translateY = React.useMemo(function () { return react_native_reanimated_1.cond(react_native_reanimated_1.eq(state, react_native_gesture_handler_1.State.ACTIVE), [
             react_native_reanimated_1.set(wasDrag, 1),
             react_native_reanimated_1.stopClock(clock),
@@ -118,6 +122,14 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
         var onGestureEvent = react_native_reanimated_1.event([
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
+        var renderNotifyProps = {
+            message: message,
+            timeout: timeout,
+            type: type,
+            data: data,
+            close: hideNotify,
+            title: title,
+        };
         return (React.createElement(react_native_gesture_handler_1.PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
             React.createElement(react_native_reanimated_1.default.View, { onLayout: function (e) {
                     if (!height) {
@@ -167,20 +179,8 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
                     }, numberOfTaps: 1 },
                     React.createElement(react_native_reanimated_1.default.View, { style: { flex: 1 } },
                         !render &&
-                            React.createElement(react_native_1.View, { style: [
-                                    type && styles[type],
-                                    styles.notifyContainer,
-                                    { height: height }
-                                ] },
-                                React.createElement(react_native_1.Text, { style: { color: "white", textAlign: "center" } }, message)),
-                        !!render && render({
-                            message: message,
-                            timeout: timeout,
-                            type: type,
-                            data: data,
-                            close: hideNotify,
-                            title: title,
-                        }))))));
+                            React.createElement(Notification_1.default, __assign({}, renderNotifyProps)),
+                        !!render && render(renderNotifyProps))))));
     };
     exports.default = Notification;
     var styles = react_native_1.StyleSheet.create({

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Dimensions, Platform, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Dimensions, Platform, StyleSheet, ViewStyle } from "react-native";
 import { PanGestureHandler, State as GestureState, TapGestureHandler } from "react-native-gesture-handler";
-import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not, and } from "react-native-reanimated";
+import Animated, { add, and, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, not, set, stopClock, sub, timing, useValue, Value } from "react-native-reanimated";
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
-import { CloseButtonProps, NotificationActions, NotificationParams, NotificationType } from "./types";
+import DefaultNotification from "./Notification";
+import { NotificationActions, NotificationParams, NotificationType } from "./types";
 const screen = Dimensions.get("screen");
 
 const TOSS_SEC = 5;
@@ -34,7 +35,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
     data,
     onPress,
     title,
-    // renderCloseButton,
     onLayout,
 }) => {
 
@@ -42,7 +42,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
         const scale = useValue(1);
         const [height, setHeight] = React.useState(0);
         const fullHeight = offsetFullMode + height;
-        // const heightAnimation = useValue(height);
+
         const [fullMode, setFullState] = React.useState(false);
         const fullState = useValue(0)
 
@@ -78,12 +78,6 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
         const close = React.useMemo(() => {
             return block([])
         }, [])
-
-        // const close = React.useMemo(() => {
-        //     return cond(lessThan(transY, -20), [
-        //         call([], () => hideNotify())
-        //     ])
-        // }, [])
 
 
         const translateY = React.useMemo(() => cond(
@@ -150,6 +144,15 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
         const onGestureEvent = event([
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
+
+        const renderNotifyProps = {
+            message,
+            timeout,
+            type,
+            data,
+            close: hideNotify,
+            title,
+        }
 
         return (
             <PanGestureHandler
@@ -223,25 +226,10 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                         >
                             {
                                 !render &&
-                                <View style={[
-                                    type && styles[type],
-                                    styles.notifyContainer,
-                                    { height }
-                                ]}>
-                                    <Text style={{ color: "white", textAlign: "center" }}>
-                                        {message}
-                                    </Text>
-                                </View>
+                                <DefaultNotification {...renderNotifyProps}/>
                             }
                             {
-                                !!render && render({
-                                    message,
-                                    timeout,
-                                    type,
-                                    data,
-                                    close: hideNotify,
-                                    title,
-                                })
+                                !!render && render(renderNotifyProps)
                             }
                         </Animated.View>
                     </TapGestureHandler>

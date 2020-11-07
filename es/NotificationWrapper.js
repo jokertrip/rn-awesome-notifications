@@ -1,23 +1,32 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import * as React from "react";
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { PanGestureHandler, State as GestureState, TapGestureHandler } from "react-native-gesture-handler";
-import Animated, { add, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, set, stopClock, sub, timing, useValue, Value, not, and } from "react-native-reanimated";
+import Animated, { add, and, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, not, set, stopClock, sub, timing, useValue, Value } from "react-native-reanimated";
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
+import DefaultNotification from "./Notification";
 import { NotificationType } from "./types";
 var screen = Dimensions.get("screen");
 var TOSS_SEC = 5;
 var offsetFullMode = 200;
 var topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 45 : 20, default: 0 });
 var Notification = function (_a) {
-    var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, 
-    // renderCloseButton,
-    onLayout = _a.onLayout;
+    var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
     var lastOffsetTop = React.useRef(0);
     var scale = useValue(1);
     var _c = React.useState(0), height = _c[0], setHeight = _c[1];
     var fullHeight = offsetFullMode + height;
-    // const heightAnimation = useValue(height);
     var _d = React.useState(false), fullMode = _d[0], setFullState = _d[1];
     var fullState = useValue(0);
     var timer = React.useRef(null);
@@ -39,11 +48,6 @@ var Notification = function (_a) {
     var close = React.useMemo(function () {
         return block([]);
     }, []);
-    // const close = React.useMemo(() => {
-    //     return cond(lessThan(transY, -20), [
-    //         call([], () => hideNotify())
-    //     ])
-    // }, [])
     var translateY = React.useMemo(function () { return cond(eq(state, GestureState.ACTIVE), [
         set(wasDrag, 1),
         stopClock(clock),
@@ -97,6 +101,14 @@ var Notification = function (_a) {
     var onGestureEvent = event([
         { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
     ]);
+    var renderNotifyProps = {
+        message: message,
+        timeout: timeout,
+        type: type,
+        data: data,
+        close: hideNotify,
+        title: title,
+    };
     return (React.createElement(PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
         React.createElement(Animated.View, { onLayout: function (e) {
                 if (!height) {
@@ -146,20 +158,8 @@ var Notification = function (_a) {
                 }, numberOfTaps: 1 },
                 React.createElement(Animated.View, { style: { flex: 1 } },
                     !render &&
-                        React.createElement(View, { style: [
-                                type && styles[type],
-                                styles.notifyContainer,
-                                { height: height }
-                            ] },
-                            React.createElement(Text, { style: { color: "white", textAlign: "center" } }, message)),
-                    !!render && render({
-                        message: message,
-                        timeout: timeout,
-                        type: type,
-                        data: data,
-                        close: hideNotify,
-                        title: title,
-                    }))))));
+                        React.createElement(DefaultNotification, __assign({}, renderNotifyProps)),
+                    !!render && render(renderNotifyProps))))));
 };
 export default Notification;
 var styles = StyleSheet.create({
