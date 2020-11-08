@@ -12,7 +12,7 @@ var __assign = (this && this.__assign) || function () {
 import { useContext } from "react";
 import { NotificationsActions } from "./useNotificationState";
 import NotificationContext from "./NotificationContext";
-import { v4 } from "react-native-uuid";
+import { v4 } from "uuid";
 export default function () {
     var dispatch = useContext(NotificationContext).dispatch;
     return function (params) {

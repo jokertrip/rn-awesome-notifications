@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NotificationsActions } from "./useNotificationState";
 import NotificationContext from "./NotificationContext";
 import { NotificationParams } from "./types";
-import { v4 } from "react-native-uuid";
+import { v4 } from "uuid";
 
 export default function<T = any>(){
 
