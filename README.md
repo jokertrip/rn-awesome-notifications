@@ -9,7 +9,7 @@ npm i --save @alexzunik/rn-awesome-notifications
 ```
 
 
-#### Install dependences
+#### Install require dependences
 
 1. [@react-native-community/blur](https://github.com/Kureev/react-native-blur)
 2. [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
@@ -18,3 +18,36 @@ npm i --save @alexzunik/rn-awesome-notifications
 5. [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)
 
 
+### Usage
+
+In root Component
+
+```
+<NotificationProvider>
+  ...
+</NotificationProvider>
+```
+
+In your Component
+
+```
+import { useNotify } from "@alexzunik/rn-awesome-notifications";
+
+const MyComponent: React.FC = () => {
+  
+  const notify = useNotify();
+  
+  return (
+    <Button
+      title="Without buttons and icon"
+      onPress={() => {
+        notify({
+          title: "Test push notification",
+          message: "This is push was recievd from local storage",
+          theme: "light"
+        })
+      }}
+    />
+  )
+}
+```
