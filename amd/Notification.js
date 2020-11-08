@@ -56,14 +56,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "@react-native-community/blur", "react", "react-native", "react-native-gesture-handler", "./icons"], function (require, exports, blur_1, React, react_native_1, react_native_gesture_handler_1, icons_1) {
+define(["require", "exports", "@react-native-community/blur", "react", "react-native", "react-native-gesture-handler", "react-native-reanimated", "./icons"], function (require, exports, blur_1, React, react_native_1, react_native_gesture_handler_1, react_native_reanimated_1, icons_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     React = __importStar(React);
+    react_native_reanimated_1 = __importDefault(react_native_reanimated_1);
     icons_1 = __importDefault(icons_1);
     var screen = react_native_1.Dimensions.get("window");
     var Notification = function (_a) {
-        var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, theme = _a.theme;
+        var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, theme = _a.theme, opacity = _a.opacity;
         var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
         var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
@@ -84,7 +85,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             return styles.textdark;
         }, [theme]);
         return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
-            React.createElement(react_native_1.View, { style: [styles.root, borderColor] },
+            React.createElement(react_native_reanimated_1.default.View, { style: [styles.root, borderColor, react_native_1.Platform.OS === "android" && { opacity: opacity }] },
                 React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                     React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
                         type && React.createElement(react_native_1.View, { style: styles.iconContainer },

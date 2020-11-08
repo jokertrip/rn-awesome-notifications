@@ -38,10 +38,11 @@ import { BlurView } from "@react-native-community/blur";
 import * as React from "react";
 import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
 import icons from "./icons";
 var screen = Dimensions.get("window");
 var Notification = function (_a) {
-    var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, theme = _a.theme;
+    var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, theme = _a.theme, opacity = _a.opacity;
     var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
     var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
     var Container = Platform.OS === 'ios' ? BlurView : View;
@@ -62,7 +63,7 @@ var Notification = function (_a) {
         return styles.textdark;
     }, [theme]);
     return (React.createElement(View, { style: { flex: 1, alignItems: "center" } },
-        React.createElement(View, { style: [styles.root, borderColor] },
+        React.createElement(Animated.View, { style: [styles.root, borderColor, Platform.OS === "android" && { opacity: opacity }] },
             React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                 React.createElement(View, { style: styles.main, collapsable: false },
                     type && React.createElement(View, { style: styles.iconContainer },

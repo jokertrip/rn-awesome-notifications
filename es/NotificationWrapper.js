@@ -101,6 +101,14 @@ var Notification = function (_a) {
     var onGestureEvent = event([
         { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
     ]);
+    var opacity = min(interpolate(scale, {
+        inputRange: Platform.select({ ios: [.7, 1], default: [-1, 1] }),
+        outputRange: [0, 1],
+    }), interpolate(translateY, {
+        inputRange: [-height, 0],
+        outputRange: [0, 1],
+        extrapolate: Extrapolate.CLAMP
+    }));
     var renderNotifyProps = {
         message: message,
         timeout: timeout,
@@ -108,7 +116,8 @@ var Notification = function (_a) {
         data: data,
         close: hideNotify,
         title: title,
-        theme: theme
+        theme: theme,
+        opacity: opacity
     };
     return (React.createElement(PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
         React.createElement(Animated.View, { onLayout: function (e) {
@@ -130,14 +139,7 @@ var Notification = function (_a) {
                 !height && { opacity: 0 },
                 //@ts-ignore
                 {
-                    opacity: min(interpolate(scale, {
-                        inputRange: Platform.select({ ios: [.7, 1], default: [-1, 1] }),
-                        outputRange: [0, 1],
-                    }), interpolate(translateY, {
-                        inputRange: [-height, 0],
-                        outputRange: [0, 1],
-                        extrapolate: Extrapolate.CLAMP
-                    })),
+                    opacity: opacity,
                     top: top,
                     transform: [{ translateY: translateY, scale: scale }],
                 }

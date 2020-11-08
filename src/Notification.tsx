@@ -2,6 +2,7 @@ import { BlurView } from "@react-native-community/blur";
 import * as React from "react";
 import { ActivityIndicator, Dimensions, Image, ImageStyle, Platform, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
 import icons from "./icons";
 import { NotificationActions, NotificationParams, NotificationTheme } from "./types";
 
@@ -9,7 +10,7 @@ const screen = Dimensions.get("window");
 
 export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => {} }[] }
 
-const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, theme }) => {
+const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, theme, opacity }) => {
     const [longMessage, setState] = React.useState(false);
     const [loading, setLoaderState] = React.useState("");
 
@@ -17,25 +18,25 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
 
     const light = theme === "light" || !theme;
 
-    const borderColor = React.useMemo(() =>{
-        if(light) return styles.borderColorlight;
+    const borderColor = React.useMemo(() => {
+        if (light) return styles.borderColorlight;
         return styles.borderColordark
-    }, [ theme ])
+    }, [theme])
 
-    const themeBlurStyle = React.useMemo(() =>{
-        if(light) return styles.blurlight;
+    const themeBlurStyle = React.useMemo(() => {
+        if (light) return styles.blurlight;
         return styles.blurdark
-    }, [ theme ]);
+    }, [theme]);
 
-    const themeText = React.useMemo(() =>{
-        if(light) return styles.textlight;
+    const themeText = React.useMemo(() => {
+        if (light) return styles.textlight;
         return styles.textdark
-    }, [ theme ]);
+    }, [theme]);
 
 
     return (
         <View style={{ flex: 1, alignItems: "center" }}>
-            <View style={[styles.root, borderColor]}>
+            <Animated.View style={[styles.root, borderColor, Platform.OS === "android" && { opacity }]}>
                 <Container style={[styles.blur, themeBlurStyle]} blurType={light ? "xlight" : "dark"}>
 
                     <View style={styles.main} collapsable={false}>
@@ -110,7 +111,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
 
                     </View>
                 </Container>
-            </View>
+            </Animated.View>
         </View>
     )
 }
@@ -149,20 +150,20 @@ const styles = StyleSheet.create<{
         shadowRadius: 10,
         width: getContainerWidth() - 20
     },
-    borderColorlight:{
+    borderColorlight: {
         borderColor: "#eaeaea",
     },
-    borderColordark:{
+    borderColordark: {
         borderColor: Platform.select({ ios: "#4f4f4f", default: "#5a5a5a" }),
     },
     blur: {
         flex: 1,
         borderRadius: 14,
     },
-    blurlight:{
+    blurlight: {
         backgroundColor: Platform.select({ ios: "transparent", default: "white" })
     },
-    blurdark:{
+    blurdark: {
         backgroundColor: Platform.select({ ios: "transparent", default: "#313131" })
     },
     main: {

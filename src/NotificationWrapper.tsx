@@ -150,6 +150,15 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
 
+        const opacity = min(interpolate(scale, {
+            inputRange: Platform.select({ ios: [.7, 1], default: [-1, 1] }),
+            outputRange: [0, 1],
+        }), interpolate(translateY, {
+            inputRange: [-height, 0],
+            outputRange: [0, 1],
+            extrapolate: Extrapolate.CLAMP
+        }))
+
         const renderNotifyProps = {
             message,
             timeout,
@@ -157,7 +166,8 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             data,
             close: hideNotify,
             title,
-            theme
+            theme,
+            opacity
         }
 
         return (
@@ -187,14 +197,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                         !height && { opacity: 0 },
                         //@ts-ignore
                         {
-                            opacity: min(interpolate(scale, {
-                                inputRange: Platform.select({ ios: [.7, 1], default: [-1, 1] }),
-                                outputRange: [0, 1],
-                            }), interpolate(translateY, {
-                                inputRange: [-height, 0],
-                                outputRange: [0, 1],
-                                extrapolate: Extrapolate.CLAMP
-                            })),
+                            opacity,
                             top,
                             transform: [{ translateY, scale }],
                         }

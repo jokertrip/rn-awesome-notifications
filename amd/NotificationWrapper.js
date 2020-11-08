@@ -123,6 +123,14 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
         var onGestureEvent = react_native_reanimated_1.event([
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
+        var opacity = react_native_reanimated_1.min(react_native_reanimated_1.interpolate(scale, {
+            inputRange: react_native_1.Platform.select({ ios: [.7, 1], default: [-1, 1] }),
+            outputRange: [0, 1],
+        }), react_native_reanimated_1.interpolate(translateY, {
+            inputRange: [-height, 0],
+            outputRange: [0, 1],
+            extrapolate: react_native_reanimated_1.Extrapolate.CLAMP
+        }));
         var renderNotifyProps = {
             message: message,
             timeout: timeout,
@@ -130,7 +138,8 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
             data: data,
             close: hideNotify,
             title: title,
-            theme: theme
+            theme: theme,
+            opacity: opacity
         };
         return (React.createElement(react_native_gesture_handler_1.PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
             React.createElement(react_native_reanimated_1.default.View, { onLayout: function (e) {
@@ -152,14 +161,7 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
                     !height && { opacity: 0 },
                     //@ts-ignore
                     {
-                        opacity: react_native_reanimated_1.min(react_native_reanimated_1.interpolate(scale, {
-                            inputRange: react_native_1.Platform.select({ ios: [.7, 1], default: [-1, 1] }),
-                            outputRange: [0, 1],
-                        }), react_native_reanimated_1.interpolate(translateY, {
-                            inputRange: [-height, 0],
-                            outputRange: [0, 1],
-                            extrapolate: react_native_reanimated_1.Extrapolate.CLAMP
-                        })),
+                        opacity: opacity,
                         top: top,
                         transform: [{ translateY: translateY, scale: scale }],
                     }
