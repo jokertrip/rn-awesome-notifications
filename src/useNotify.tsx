@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NotificationsActions } from "./useNotificationState";
 import NotificationContext from "./NotificationContext";
 import { NotificationParams } from "./types";
-import uuid from "uuid";
+import { v4 } from "react-native-uuid";
 
 export default function<T = any>(){
 
@@ -10,7 +10,7 @@ export default function<T = any>(){
 
     return (params: NotificationParams<T>)=>{
 
-        const id = uuid.v4();
+        const id = v4();
     
         dispatch({
             type: NotificationsActions.add,
