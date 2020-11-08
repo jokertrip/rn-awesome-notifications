@@ -1,6 +1,7 @@
-export * from "./types";
 import Notification from "./Notification";
 import NotificationProvider from "./NotificationProvider";
 import useNotify from "./useNotify";
-export { Notification, NotificationProvider, useNotify, };
+import withNotify from "./withNotify";
 export * from "./withNotify";
+export * from "./types";
+export { Notification, NotificationProvider, useNotify, withNotify };

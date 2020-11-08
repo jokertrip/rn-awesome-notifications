@@ -1,7 +1,8 @@
-export * from "./types";
 import Notification, { NotificationExtra as TNotificationExtra } from "./Notification";
 import NotificationProvider from "./NotificationProvider";
 import useNotify from "./useNotify";
-export { Notification, NotificationProvider, useNotify, };
-export declare type NotificationExtra = TNotificationExtra;
+import withNotify from "./withNotify";
 export * from "./withNotify";
+export * from "./types";
+export { Notification, NotificationProvider, useNotify, withNotify };
+export declare type NotificationExtra = TNotificationExtra;
