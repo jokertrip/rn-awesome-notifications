@@ -28,8 +28,8 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
     }, [ theme ]);
 
     const themeText = React.useMemo(() =>{
-        if(light) return styles.blurlight;
-        return styles.blurdark
+        if(light) return styles.textlight;
+        return styles.textdark
     }, [ theme ]);
 
     return (
@@ -60,10 +60,10 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                 styles.messageContainer
                             ]}
                         >
-                            <Text allowFontScaling={false} numberOfLines={2} style={{ fontWeight: "bold", color: "#4b4b4b" }}>{title}</Text>
+                            <Text allowFontScaling={false} numberOfLines={2} style={[{ fontWeight: "bold" }, themeText]}>{title}</Text>
                             <Text
                                 allowFontScaling={false}
-                                style={{ color: "#4b4b4b" }}
+                                style={themeText}
                                 onLayout={(e) => {
                                     if ((e.nativeEvent.layout.height > 30)) {
                                         setState(true)
@@ -94,7 +94,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                                 loading !== key &&
                                                 <Text
                                                     allowFontScaling={false}
-                                                    style={{ color: "#4b4b4b", opacity: loading ? .3 : 1 }}
+                                                    style={[{ opacity: loading ? .3 : 1 }, themeText]}
                                                 >
                                                     {title}
                                                 </Text>

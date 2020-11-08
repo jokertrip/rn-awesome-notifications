@@ -58,8 +58,8 @@ var Notification = function (_a) {
     }, [theme]);
     var themeText = React.useMemo(function () {
         if (light)
-            return styles.blurlight;
-        return styles.blurdark;
+            return styles.textlight;
+        return styles.textdark;
     }, [theme]);
     return (React.createElement(View, { style: { flex: 1, alignItems: "center" } },
         React.createElement(View, { style: [styles.root, themeRootStyle] },
@@ -72,8 +72,8 @@ var Notification = function (_a) {
                             styles.stretchContainer,
                             styles.messageContainer
                         ] },
-                        React.createElement(Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
-                        React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
+                        React.createElement(Text, { allowFontScaling: false, numberOfLines: 2, style: [{ fontWeight: "bold" }, themeText] }, title),
+                        React.createElement(Text, { allowFontScaling: false, style: themeText, onLayout: function (e) {
                                 if ((e.nativeEvent.layout.height > 30)) {
                                     setState(true);
                                 }
@@ -99,7 +99,7 @@ var Notification = function (_a) {
                             React.createElement(View, { style: styles.button },
                                 loading === key && React.createElement(ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                 loading !== key &&
-                                    React.createElement(Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
+                                    React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title))));
                     }))))));
 };
 export default Notification;

@@ -80,8 +80,8 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
         }, [theme]);
         var themeText = React.useMemo(function () {
             if (light)
-                return styles.blurlight;
-            return styles.blurdark;
+                return styles.textlight;
+            return styles.textdark;
         }, [theme]);
         return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
             React.createElement(react_native_1.View, { style: [styles.root, themeRootStyle] },
@@ -94,8 +94,8 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                 styles.stretchContainer,
                                 styles.messageContainer
                             ] },
-                            React.createElement(react_native_1.Text, { allowFontScaling: false, numberOfLines: 2, style: { fontWeight: "bold", color: "#4b4b4b" } }, title),
-                            React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b" }, onLayout: function (e) {
+                            React.createElement(react_native_1.Text, { allowFontScaling: false, numberOfLines: 2, style: [{ fontWeight: "bold" }, themeText] }, title),
+                            React.createElement(react_native_1.Text, { allowFontScaling: false, style: themeText, onLayout: function (e) {
                                     if ((e.nativeEvent.layout.height > 30)) {
                                         setState(true);
                                     }
@@ -121,7 +121,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                 React.createElement(react_native_1.View, { style: styles.button },
                                     loading === key && React.createElement(react_native_1.ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                     loading !== key &&
-                                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: { color: "#4b4b4b", opacity: loading ? .3 : 1 } }, title))));
+                                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title))));
                         }))))));
     };
     exports.default = Notification;
