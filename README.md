@@ -5,10 +5,12 @@
 ### Installation
 
 ```sh
-npm i --save "git+https://github.com/AleksandrNikolaevich/rn-awesome-notifications.git"
+npm i --save "@alexzunik/rn-awesome-notifications"
 ```
 
 
 ```sh
 npx pod-install
 ```
+
+
