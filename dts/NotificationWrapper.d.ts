@@ -5,6 +5,7 @@ export declare type NotificationProps = {
     vibration?: boolean;
     showingCountInMoment?: number;
     theme?: NotificationTheme;
+    offsetTop?: number;
 };
 declare const Notification: React.FC<NotificationParams & NotificationProps & {
     onClose: (height: number) => void;

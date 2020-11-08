@@ -21,7 +21,7 @@ var TOSS_SEC = 5;
 var offsetFullMode = 200;
 var topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 40 : 20, default: 0 });
 var Notification = function (_a) {
-    var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, theme = _a.theme, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
+    var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, theme = _a.theme, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout, offsetTop = _a.offsetTop;
     var lastOffsetTop = React.useRef(0);
     var scale = useValue(1);
     var _c = React.useState(0), height = _c[0], setHeight = _c[1];
@@ -33,12 +33,13 @@ var Notification = function (_a) {
     var state = useValue(-1);
     var lastState = useValue(-1);
     var dragVY = useValue(0);
-    var top = useValue(topOffset);
+    var finalOffsetTop = topOffset + (offsetTop || 0);
+    var top = useValue(finalOffsetTop);
     var transY = new Value(-screen.height);
     var prevDragY = new Value(0);
     var clock = React.useMemo(function () { return new Clock(); }, []);
     var wasDrag = useValue(0);
-    var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - topOffset;
+    var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - finalOffsetTop;
     var snapPoint = React.useMemo(function () {
         return block([
             cond(lessThan(add(transY, multiply(TOSS_SEC, dragVY)), 0), closedValue, cond(fullState, 50, 0))
@@ -116,7 +117,7 @@ var Notification = function (_a) {
                     onLayout(height_1, function (h) {
                         timing(top, {
                             duration: 250,
-                            toValue: lastOffsetTop.current + h + topOffset,
+                            toValue: lastOffsetTop.current + h + finalOffsetTop,
                             easing: Easing.ease
                         }).start();
                         lastOffsetTop.current += h;

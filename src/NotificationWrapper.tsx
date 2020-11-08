@@ -17,7 +17,8 @@ export type NotificationProps = {
     render?: (args: NotificationParams & NotificationActions) => React.ReactNode,
     vibration?: boolean,
     showingCountInMoment?: number,
-    theme?: NotificationTheme
+    theme?: NotificationTheme,
+    offsetTop?: number
 }
 
 const Notification: React.FC<NotificationParams & NotificationProps & {
@@ -37,6 +38,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
     onPress,
     title,
     onLayout,
+    offsetTop
 }) => {
 
         const lastOffsetTop = React.useRef(0)
@@ -55,7 +57,9 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
 
         const dragVY = useValue(0);
 
-        const top = useValue(topOffset);
+        const finalOffsetTop = topOffset + (offsetTop || 0);
+
+        const top = useValue(finalOffsetTop);
 
         const transY = new Value<number>(-screen.height);
         const prevDragY = new Value(0);
@@ -64,7 +68,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
 
         const wasDrag = useValue(0);
 
-        const closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - topOffset;
+        const closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - finalOffsetTop;
 
         const snapPoint = React.useMemo(() => {
             return block([
@@ -169,7 +173,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                             onLayout(height, (h) => {
                                 timing(top, {
                                     duration: 250,
-                                    toValue: lastOffsetTop.current + h + topOffset,
+                                    toValue: lastOffsetTop.current + h + finalOffsetTop,
                                     easing: Easing.ease
                                 }).start();
                                 lastOffsetTop.current += h

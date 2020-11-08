@@ -43,7 +43,7 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
     var offsetFullMode = 200;
     var topOffset = react_native_1.Platform.select({ ios: iPhoneHelper_1.default.isIphoneX() ? 40 : 20, default: 0 });
     var Notification = function (_a) {
-        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, theme = _a.theme, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
+        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, theme = _a.theme, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout, offsetTop = _a.offsetTop;
         var lastOffsetTop = React.useRef(0);
         var scale = react_native_reanimated_1.useValue(1);
         var _c = React.useState(0), height = _c[0], setHeight = _c[1];
@@ -55,12 +55,13 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
         var state = react_native_reanimated_1.useValue(-1);
         var lastState = react_native_reanimated_1.useValue(-1);
         var dragVY = react_native_reanimated_1.useValue(0);
-        var top = react_native_reanimated_1.useValue(topOffset);
+        var finalOffsetTop = topOffset + (offsetTop || 0);
+        var top = react_native_reanimated_1.useValue(finalOffsetTop);
         var transY = new react_native_reanimated_1.Value(-screen.height);
         var prevDragY = new react_native_reanimated_1.Value(0);
         var clock = React.useMemo(function () { return new react_native_reanimated_1.Clock(); }, []);
         var wasDrag = react_native_reanimated_1.useValue(0);
-        var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - topOffset;
+        var closedValue = (fullMode ? -fullHeight - (height * (offset + 1)) : -height * (offset + 1)) - finalOffsetTop;
         var snapPoint = React.useMemo(function () {
             return react_native_reanimated_1.block([
                 react_native_reanimated_1.cond(react_native_reanimated_1.lessThan(react_native_reanimated_1.add(transY, react_native_reanimated_1.multiply(TOSS_SEC, dragVY)), 0), closedValue, react_native_reanimated_1.cond(fullState, 50, 0))
@@ -138,7 +139,7 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
                         onLayout(height_1, function (h) {
                             react_native_reanimated_1.timing(top, {
                                 duration: 250,
-                                toValue: lastOffsetTop.current + h + topOffset,
+                                toValue: lastOffsetTop.current + h + finalOffsetTop,
                                 easing: react_native_reanimated_1.Easing.ease
                             }).start();
                             lastOffsetTop.current += h;
