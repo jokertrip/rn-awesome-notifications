@@ -123,7 +123,7 @@ var styles = StyleSheet.create({
         borderColor: "#eaeaea",
     },
     borderColordark: {
-        borderColor: "#5a5a5a",
+        borderColor: Platform.select({ ios: "#4f4f4f", default: "#5a5a5a" }),
     },
     blur: {
         flex: 1,

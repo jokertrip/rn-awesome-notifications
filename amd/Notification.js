@@ -145,7 +145,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             borderColor: "#eaeaea",
         },
         borderColordark: {
-            borderColor: "#5a5a5a",
+            borderColor: react_native_1.Platform.select({ ios: "#4f4f4f", default: "#5a5a5a" }),
         },
         blur: {
             flex: 1,
