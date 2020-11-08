@@ -68,10 +68,10 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
         var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
         var light = theme === "light" || !theme;
-        var themeRootStyle = React.useMemo(function () {
+        var borderColor = React.useMemo(function () {
             if (light)
-                return styles.rootlight;
-            return styles.rootdark;
+                return styles.borderColorlight;
+            return styles.borderColordark;
         }, [theme]);
         var themeBlurStyle = React.useMemo(function () {
             if (light)
@@ -84,7 +84,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             return styles.textdark;
         }, [theme]);
         return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
-            React.createElement(react_native_1.View, { style: [styles.root, themeRootStyle] },
+            React.createElement(react_native_1.View, { style: [styles.root, borderColor] },
                 React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                     React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
                         type && React.createElement(react_native_1.View, { style: styles.iconContainer },
@@ -118,7 +118,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                         }
                                     });
                                 }); } },
-                                React.createElement(react_native_1.View, { style: styles.button },
+                                React.createElement(react_native_1.View, { style: [styles.button, borderColor] },
                                     loading === key && React.createElement(react_native_1.ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                     loading !== key &&
                                         React.createElement(react_native_1.Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title))));
@@ -141,11 +141,11 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             shadowRadius: 10,
             width: getContainerWidth() - 20
         },
-        rootlight: {
+        borderColorlight: {
             borderColor: "#eaeaea",
         },
-        rootdark: {
-            borderColor: "#565656",
+        borderColordark: {
+            borderColor: "#212121",
         },
         blur: {
             flex: 1,
@@ -155,7 +155,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "white" })
         },
         blurdark: {
-            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "#646464" })
+            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "#1e1e1e" })
         },
         main: {
             flex: 1,
@@ -164,7 +164,6 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             paddingHorizontal: 10,
         },
         button: {
-            borderColor: "#ccc",
             borderLeftWidth: react_native_1.StyleSheet.hairlineWidth,
             alignSelf: 'stretch',
             justifyContent: "center",

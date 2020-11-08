@@ -46,10 +46,10 @@ var Notification = function (_a) {
     var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
     var Container = Platform.OS === 'ios' ? BlurView : View;
     var light = theme === "light" || !theme;
-    var themeRootStyle = React.useMemo(function () {
+    var borderColor = React.useMemo(function () {
         if (light)
-            return styles.rootlight;
-        return styles.rootdark;
+            return styles.borderColorlight;
+        return styles.borderColordark;
     }, [theme]);
     var themeBlurStyle = React.useMemo(function () {
         if (light)
@@ -62,7 +62,7 @@ var Notification = function (_a) {
         return styles.textdark;
     }, [theme]);
     return (React.createElement(View, { style: { flex: 1, alignItems: "center" } },
-        React.createElement(View, { style: [styles.root, themeRootStyle] },
+        React.createElement(View, { style: [styles.root, borderColor] },
             React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                 React.createElement(View, { style: styles.main, collapsable: false },
                     type && React.createElement(View, { style: styles.iconContainer },
@@ -96,7 +96,7 @@ var Notification = function (_a) {
                                     }
                                 });
                             }); } },
-                            React.createElement(View, { style: styles.button },
+                            React.createElement(View, { style: [styles.button, borderColor] },
                                 loading === key && React.createElement(ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                 loading !== key &&
                                     React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title))));
@@ -119,11 +119,11 @@ var styles = StyleSheet.create({
         shadowRadius: 10,
         width: getContainerWidth() - 20
     },
-    rootlight: {
+    borderColorlight: {
         borderColor: "#eaeaea",
     },
-    rootdark: {
-        borderColor: "#565656",
+    borderColordark: {
+        borderColor: "#212121",
     },
     blur: {
         flex: 1,
@@ -133,7 +133,7 @@ var styles = StyleSheet.create({
         backgroundColor: Platform.select({ ios: "transparent", default: "white" })
     },
     blurdark: {
-        backgroundColor: Platform.select({ ios: "transparent", default: "#646464" })
+        backgroundColor: Platform.select({ ios: "transparent", default: "#1e1e1e" })
     },
     main: {
         flex: 1,
@@ -142,7 +142,6 @@ var styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     button: {
-        borderColor: "#ccc",
         borderLeftWidth: StyleSheet.hairlineWidth,
         alignSelf: 'stretch',
         justifyContent: "center",

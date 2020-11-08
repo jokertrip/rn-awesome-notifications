@@ -17,9 +17,9 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
 
     const light = theme === "light" || !theme;
 
-    const themeRootStyle = React.useMemo(() =>{
-        if(light) return styles.rootlight;
-        return styles.rootdark
+    const borderColor = React.useMemo(() =>{
+        if(light) return styles.borderColorlight;
+        return styles.borderColordark
     }, [ theme ])
 
     const themeBlurStyle = React.useMemo(() =>{
@@ -32,9 +32,10 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
         return styles.textdark
     }, [ theme ]);
 
+
     return (
         <View style={{ flex: 1, alignItems: "center" }}>
-            <View style={[styles.root, themeRootStyle]}>
+            <View style={[styles.root, borderColor]}>
                 <Container style={[styles.blur, themeBlurStyle]} blurType={light ? "xlight" : "dark"}>
 
                     <View style={styles.main} collapsable={false}>
@@ -86,7 +87,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                             }
                                         }}
                                     >
-                                        <View style={styles.button}>
+                                        <View style={[styles.button, borderColor]}>
                                             {
                                                 loading === key && <ActivityIndicator size={"small"} color={"gray"} collapsable={false} />
                                             }
@@ -124,8 +125,8 @@ function getContainerWidth() {
 
 const styles = StyleSheet.create<{
     root: ViewStyle,
-    rootlight: ViewStyle,
-    rootdark: ViewStyle,
+    borderColorlight: ViewStyle,
+    borderColordark: ViewStyle,
     blur: ViewStyle,
     blurlight: ViewStyle,
     blurdark: ViewStyle,
@@ -148,11 +149,11 @@ const styles = StyleSheet.create<{
         shadowRadius: 10,
         width: getContainerWidth() - 20
     },
-    rootlight:{
+    borderColorlight:{
         borderColor: "#eaeaea",
     },
-    rootdark:{
-        borderColor: "#565656",
+    borderColordark:{
+        borderColor: "#212121",
     },
     blur: {
         flex: 1,
@@ -162,7 +163,7 @@ const styles = StyleSheet.create<{
         backgroundColor: Platform.select({ ios: "transparent", default: "white" })
     },
     blurdark:{
-        backgroundColor: Platform.select({ ios: "transparent", default: "#646464" })
+        backgroundColor: Platform.select({ ios: "transparent", default: "#1e1e1e" })
     },
     main: {
         flex: 1,
@@ -171,7 +172,6 @@ const styles = StyleSheet.create<{
         paddingHorizontal: 10,
     },
     button: {
-        borderColor: "#ccc",
         borderLeftWidth: StyleSheet.hairlineWidth,
         alignSelf: 'stretch',
         justifyContent: "center",
