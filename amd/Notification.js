@@ -68,10 +68,24 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
         var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
         var light = theme === "light" || !theme;
-        var backgroundColor = react_native_1.Platform.select({ ios: "transparent", default: light ? "white" : "#646464" });
+        var themeRootStyle = React.useMemo(function () {
+            if (light)
+                return styles.rootlight;
+            return styles.rootdark;
+        }, [theme]);
+        var themeBlurStyle = React.useMemo(function () {
+            if (light)
+                return styles.blurlight;
+            return styles.blurdark;
+        }, [theme]);
+        var themeText = React.useMemo(function () {
+            if (light)
+                return styles.blurlight;
+            return styles.blurdark;
+        }, [theme]);
         return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
-            React.createElement(react_native_1.View, { style: styles.root },
-                React.createElement(Container, { style: [styles.blur, { backgroundColor: backgroundColor }], blurType: light ? "xlight" : "dark" },
+            React.createElement(react_native_1.View, { style: [styles.root, themeRootStyle] },
+                React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                     React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
                         type && React.createElement(react_native_1.View, { style: styles.iconContainer },
                             React.createElement(react_native_1.Image, { source: icons_1.default[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
@@ -119,7 +133,6 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
     var styles = react_native_1.StyleSheet.create({
         root: {
             flex: 1,
-            borderColor: "#eaeaea",
             borderWidth: react_native_1.StyleSheet.hairlineWidth,
             elevation: 5,
             borderRadius: 14,
@@ -128,9 +141,21 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             shadowRadius: 10,
             width: getContainerWidth() - 20
         },
+        rootlight: {
+            borderColor: "#eaeaea",
+        },
+        rootdark: {
+            borderColor: "#565656",
+        },
         blur: {
             flex: 1,
             borderRadius: 14,
+        },
+        blurlight: {
+            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "white" })
+        },
+        blurdark: {
+            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "#646464" })
         },
         main: {
             flex: 1,
@@ -167,6 +192,8 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             height: 60,
             alignItems: "center",
             justifyContent: "center"
-        }
+        },
+        textlight: { color: "#4b4b4b" },
+        textdark: { color: "#ccc" },
     });
 });

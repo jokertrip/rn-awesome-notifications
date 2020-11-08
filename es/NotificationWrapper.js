@@ -16,7 +16,6 @@ import Animated, { add, and, block, call, Clock, cond, defined, Easing, eq, even
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
 import DefaultNotification from "./Notification";
-import { NotificationType } from "./types";
 var screen = Dimensions.get("screen");
 var TOSS_SEC = 5;
 var offsetFullMode = 200;
@@ -170,18 +169,4 @@ var styles = StyleSheet.create({
         top: 0,
         width: "100%",
     },
-    error: {
-        backgroundColor: "red",
-    },
-    success: {
-        backgroundColor: "green",
-    },
-    info: {
-        backgroundColor: "blue",
-    },
-    notifyContainer: {
-        flex: 1,
-        paddingVertical: 20,
-        paddingHorizontal: 20
-    }
 });

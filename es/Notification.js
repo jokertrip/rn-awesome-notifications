@@ -46,10 +46,24 @@ var Notification = function (_a) {
     var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
     var Container = Platform.OS === 'ios' ? BlurView : View;
     var light = theme === "light" || !theme;
-    var backgroundColor = Platform.select({ ios: "transparent", default: light ? "white" : "#646464" });
+    var themeRootStyle = React.useMemo(function () {
+        if (light)
+            return styles.rootlight;
+        return styles.rootdark;
+    }, [theme]);
+    var themeBlurStyle = React.useMemo(function () {
+        if (light)
+            return styles.blurlight;
+        return styles.blurdark;
+    }, [theme]);
+    var themeText = React.useMemo(function () {
+        if (light)
+            return styles.blurlight;
+        return styles.blurdark;
+    }, [theme]);
     return (React.createElement(View, { style: { flex: 1, alignItems: "center" } },
-        React.createElement(View, { style: styles.root },
-            React.createElement(Container, { style: [styles.blur, { backgroundColor: backgroundColor }], blurType: light ? "xlight" : "dark" },
+        React.createElement(View, { style: [styles.root, themeRootStyle] },
+            React.createElement(Container, { style: [styles.blur, themeBlurStyle], blurType: light ? "xlight" : "dark" },
                 React.createElement(View, { style: styles.main, collapsable: false },
                     type && React.createElement(View, { style: styles.iconContainer },
                         React.createElement(Image, { source: icons[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
@@ -97,7 +111,6 @@ function getContainerWidth() {
 var styles = StyleSheet.create({
     root: {
         flex: 1,
-        borderColor: "#eaeaea",
         borderWidth: StyleSheet.hairlineWidth,
         elevation: 5,
         borderRadius: 14,
@@ -106,9 +119,21 @@ var styles = StyleSheet.create({
         shadowRadius: 10,
         width: getContainerWidth() - 20
     },
+    rootlight: {
+        borderColor: "#eaeaea",
+    },
+    rootdark: {
+        borderColor: "#565656",
+    },
     blur: {
         flex: 1,
         borderRadius: 14,
+    },
+    blurlight: {
+        backgroundColor: Platform.select({ ios: "transparent", default: "white" })
+    },
+    blurdark: {
+        backgroundColor: Platform.select({ ios: "transparent", default: "#646464" })
     },
     main: {
         flex: 1,
@@ -145,5 +170,7 @@ var styles = StyleSheet.create({
         height: 60,
         alignItems: "center",
         justifyContent: "center"
-    }
+    },
+    textlight: { color: "#4b4b4b" },
+    textdark: { color: "#ccc" },
 });

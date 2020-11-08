@@ -31,7 +31,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "react", "react-native", "react-native-gesture-handler", "react-native-reanimated", "./animations", "./iPhoneHelper", "./Notification", "./types"], function (require, exports, React, react_native_1, react_native_gesture_handler_1, react_native_reanimated_1, animations_1, iPhoneHelper_1, Notification_1, types_1) {
+define(["require", "exports", "react", "react-native", "react-native-gesture-handler", "react-native-reanimated", "./animations", "./iPhoneHelper", "./Notification"], function (require, exports, React, react_native_1, react_native_gesture_handler_1, react_native_reanimated_1, animations_1, iPhoneHelper_1, Notification_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     React = __importStar(React);
@@ -191,19 +191,5 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
             top: 0,
             width: "100%",
         },
-        error: {
-            backgroundColor: "red",
-        },
-        success: {
-            backgroundColor: "green",
-        },
-        info: {
-            backgroundColor: "blue",
-        },
-        notifyContainer: {
-            flex: 1,
-            paddingVertical: 20,
-            paddingHorizontal: 20
-        }
     });
 });
