@@ -155,7 +155,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "white" })
         },
         blurdark: {
-            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "#1e1e1e" })
+            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "#303030" })
         },
         main: {
             flex: 1,

@@ -163,7 +163,7 @@ const styles = StyleSheet.create<{
         backgroundColor: Platform.select({ ios: "transparent", default: "white" })
     },
     blurdark:{
-        backgroundColor: Platform.select({ ios: "transparent", default: "#1e1e1e" })
+        backgroundColor: Platform.select({ ios: "transparent", default: "#303030" })
     },
     main: {
         flex: 1,
