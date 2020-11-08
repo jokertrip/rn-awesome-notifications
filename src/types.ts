@@ -15,6 +15,7 @@ export type NotificationParams<TData = any> = {
     data?: TData,
     onPress?: ()=>void,
     heightAnimation?: Animated.Value<number>
+    theme?: NotificationTheme, 
 }
 
 export type NotificationActions = {
@@ -26,3 +27,5 @@ export type CloseButtonProps = {
     fullState: Animated.Value<number>,
     onPress: (event: TapGestureHandlerStateChangeEvent)=>void
 }
+
+export type NotificationTheme = "light" | "dark"

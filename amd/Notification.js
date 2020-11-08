@@ -63,13 +63,15 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
     icons_1 = __importDefault(icons_1);
     var screen = react_native_1.Dimensions.get("window");
     var Notification = function (_a) {
-        var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, heightAnimation = _a.heightAnimation;
+        var title = _a.title, message = _a.message, data = _a.data, close = _a.close, type = _a.type, theme = _a.theme;
         var _b = React.useState(false), longMessage = _b[0], setState = _b[1];
         var _c = React.useState(""), loading = _c[0], setLoaderState = _c[1];
         var Container = react_native_1.Platform.OS === 'ios' ? blur_1.BlurView : react_native_1.View;
+        var light = theme === "light" || !theme;
+        var backgroundColor = react_native_1.Platform.select({ ios: "transparent", default: light ? "white" : "#646464" });
         return (React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
             React.createElement(react_native_1.View, { style: styles.root },
-                React.createElement(Container, { style: styles.blur, blurType: "xlight" },
+                React.createElement(Container, { style: [styles.blur, { backgroundColor: backgroundColor }], blurType: light ? "xlight" : "dark" },
                     React.createElement(react_native_1.View, { style: styles.main, collapsable: false },
                         type && React.createElement(react_native_1.View, { style: styles.iconContainer },
                             React.createElement(react_native_1.Image, { source: icons_1.default[type], style: { width: 30, height: 30, marginRight: 10, }, resizeMode: "contain" })),
@@ -124,7 +126,6 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             shadowColor: 'black',
             shadowOpacity: .1,
             shadowRadius: 10,
-            backgroundColor: react_native_1.Platform.select({ ios: "transparent", default: "white" }),
             width: getContainerWidth() - 20
         },
         blur: {

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { NotificationActions, NotificationParams } from "./types";
+import { NotificationActions, NotificationParams, NotificationTheme } from "./types";
 export declare type NotificationProps = {
     render?: (args: NotificationParams & NotificationActions) => React.ReactNode;
     vibration?: boolean;
     showingCountInMoment?: number;
+    theme?: NotificationTheme;
 };
 declare const Notification: React.FC<NotificationParams & NotificationProps & {
     onClose: (height: number) => void;

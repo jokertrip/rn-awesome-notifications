@@ -5,18 +5,19 @@ import Animated, { add, and, block, call, Clock, cond, defined, Easing, eq, even
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
 import DefaultNotification from "./Notification";
-import { NotificationActions, NotificationParams, NotificationType } from "./types";
+import { NotificationActions, NotificationParams, NotificationTheme, NotificationType } from "./types";
 const screen = Dimensions.get("screen");
 
 const TOSS_SEC = 5;
 const offsetFullMode = 200;
 
-const topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 45 : 20, default: 0 });
+const topOffset = Platform.select({ ios: iPhoneHelper.isIphoneX() ? 40 : 20, default: 0 });
 
 export type NotificationProps = {
     render?: (args: NotificationParams & NotificationActions) => React.ReactNode,
     vibration?: boolean,
-    showingCountInMoment?: number
+    showingCountInMoment?: number,
+    theme?: NotificationTheme
 }
 
 const Notification: React.FC<NotificationParams & NotificationProps & {
@@ -31,7 +32,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
     onClose,
     render,
     offset = 0,
-    id,
+    theme,
     data,
     onPress,
     title,
@@ -152,6 +153,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             data,
             close: hideNotify,
             title,
+            theme
         }
 
         return (

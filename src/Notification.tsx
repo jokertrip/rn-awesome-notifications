@@ -9,16 +9,20 @@ const screen = Dimensions.get("window");
 
 export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => {} }[] }
 
-const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, heightAnimation }) => {
+const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, theme }) => {
     const [longMessage, setState] = React.useState(false);
     const [loading, setLoaderState] = React.useState("");
 
     const Container: any = Platform.OS === 'ios' ? BlurView : View;
 
+    const light = theme === "light" || !theme;
+
+    const backgroundColor = Platform.select({ ios: "transparent", default: light ? "white" : "#646464" })
+
     return (
-        <View style={{flex: 1, alignItems: "center"}}>
+        <View style={{ flex: 1, alignItems: "center" }}>
             <View style={styles.root}>
-                <Container style={styles.blur} blurType={"xlight"}>
+                <Container style={[styles.blur, { backgroundColor }]} blurType={light ? "xlight" : "dark"}>
 
                     <View style={styles.main} collapsable={false}>
                         {
@@ -124,7 +128,6 @@ const styles = StyleSheet.create<{
         shadowColor: 'black',
         shadowOpacity: .1,
         shadowRadius: 10,
-        backgroundColor: Platform.select({ ios: "transparent", default: "white" }),
         width: getContainerWidth() - 20
     },
     blur: {

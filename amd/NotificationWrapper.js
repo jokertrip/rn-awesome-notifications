@@ -41,9 +41,9 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
     var screen = react_native_1.Dimensions.get("screen");
     var TOSS_SEC = 5;
     var offsetFullMode = 200;
-    var topOffset = react_native_1.Platform.select({ ios: iPhoneHelper_1.default.isIphoneX() ? 45 : 20, default: 0 });
+    var topOffset = react_native_1.Platform.select({ ios: iPhoneHelper_1.default.isIphoneX() ? 40 : 20, default: 0 });
     var Notification = function (_a) {
-        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, id = _a.id, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
+        var message = _a.message, timeout = _a.timeout, type = _a.type, onClose = _a.onClose, render = _a.render, _b = _a.offset, offset = _b === void 0 ? 0 : _b, theme = _a.theme, data = _a.data, onPress = _a.onPress, title = _a.title, onLayout = _a.onLayout;
         var lastOffsetTop = React.useRef(0);
         var scale = react_native_reanimated_1.useValue(1);
         var _c = React.useState(0), height = _c[0], setHeight = _c[1];
@@ -129,6 +129,7 @@ define(["require", "exports", "react", "react-native", "react-native-gesture-han
             data: data,
             close: hideNotify,
             title: title,
+            theme: theme
         };
         return (React.createElement(react_native_gesture_handler_1.PanGestureHandler, { onGestureEvent: onGestureEvent, onHandlerStateChange: onGestureEvent, activeOffsetY: [-15, 15] },
             React.createElement(react_native_reanimated_1.default.View, { onLayout: function (e) {
