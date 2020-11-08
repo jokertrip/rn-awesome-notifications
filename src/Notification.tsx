@@ -1,9 +1,9 @@
 import { BlurView } from "@react-native-community/blur";
 import * as React from "react";
-import { ActivityIndicator, Dimensions, Image, ImageStyle, Platform, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { ActivityIndicator, Dimensions, Image, ImageStyle, Platform, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import icons from "./icons";
-import { NotificationActions, NotificationParams } from "./types";
+import { NotificationActions, NotificationParams, NotificationTheme } from "./types";
 
 const screen = Dimensions.get("window");
 
@@ -17,12 +17,25 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
 
     const light = theme === "light" || !theme;
 
-    const backgroundColor = Platform.select({ ios: "transparent", default: light ? "white" : "#646464" })
+    const themeRootStyle = React.useMemo(() =>{
+        if(light) return styles.rootlight;
+        return styles.rootdark
+    }, [ theme ])
+
+    const themeBlurStyle = React.useMemo(() =>{
+        if(light) return styles.blurlight;
+        return styles.blurdark
+    }, [ theme ]);
+
+    const themeText = React.useMemo(() =>{
+        if(light) return styles.blurlight;
+        return styles.blurdark
+    }, [ theme ]);
 
     return (
         <View style={{ flex: 1, alignItems: "center" }}>
-            <View style={styles.root}>
-                <Container style={[styles.blur, { backgroundColor }]} blurType={light ? "xlight" : "dark"}>
+            <View style={[styles.root, themeRootStyle]}>
+                <Container style={[styles.blur, themeBlurStyle]} blurType={light ? "xlight" : "dark"}>
 
                     <View style={styles.main} collapsable={false}>
                         {
@@ -111,17 +124,22 @@ function getContainerWidth() {
 
 const styles = StyleSheet.create<{
     root: ViewStyle,
+    rootlight: ViewStyle,
+    rootdark: ViewStyle,
     blur: ViewStyle,
+    blurlight: ViewStyle,
+    blurdark: ViewStyle,
     main: ViewStyle,
     button: ViewStyle,
     stretchContainer: ViewStyle,
     messageContainer: ViewStyle,
     image: ImageStyle,
-    iconContainer: ViewStyle
+    iconContainer: ViewStyle,
+    textlight: TextStyle,
+    textdark: TextStyle,
 }>({
     root: {
         flex: 1,
-        borderColor: "#eaeaea",
         borderWidth: StyleSheet.hairlineWidth,
         elevation: 5,
         borderRadius: 14,
@@ -130,9 +148,21 @@ const styles = StyleSheet.create<{
         shadowRadius: 10,
         width: getContainerWidth() - 20
     },
+    rootlight:{
+        borderColor: "#eaeaea",
+    },
+    rootdark:{
+        borderColor: "#565656",
+    },
     blur: {
         flex: 1,
         borderRadius: 14,
+    },
+    blurlight:{
+        backgroundColor: Platform.select({ ios: "transparent", default: "white" })
+    },
+    blurdark:{
+        backgroundColor: Platform.select({ ios: "transparent", default: "#646464" })
     },
     main: {
         flex: 1,
@@ -169,5 +199,7 @@ const styles = StyleSheet.create<{
         height: 60,
         alignItems: "center",
         justifyContent: "center"
-    }
+    },
+    textlight: { color: "#4b4b4b" },
+    textdark: { color: "#ccc" },
 })

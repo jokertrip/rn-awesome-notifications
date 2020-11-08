@@ -246,10 +246,6 @@ export default Notification
 
 const styles = StyleSheet.create<{
     root: ViewStyle,
-    notifyContainer: ViewStyle,
-    [NotificationType.error]: ViewStyle,
-    [NotificationType.success]: ViewStyle,
-    [NotificationType.info]: ViewStyle
 }>({
     root: {
         paddingTop: 5,
@@ -258,18 +254,4 @@ const styles = StyleSheet.create<{
         width: "100%",
 
     },
-    error: {
-        backgroundColor: "red",
-    },
-    success: {
-        backgroundColor: "green",
-    },
-    info: {
-        backgroundColor: "blue",
-    },
-    notifyContainer: {
-        flex: 1,
-        paddingVertical: 20,
-        paddingHorizontal: 20
-    }
 })
