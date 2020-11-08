@@ -46,7 +46,6 @@ const MyComponent: React.FC = () => {
         notify({
           title: "Test push notification",
           message: "This is push was recievd from local storage",
-          theme: "light"
         })
       }}
     />
