@@ -153,7 +153,7 @@ const styles = StyleSheet.create<{
         borderColor: "#eaeaea",
     },
     borderColordark:{
-        borderColor: Platform.select({ ios: "#6a6a6a", default: "#5a5a5a" }),
+        borderColor: "#5a5a5a",
     },
     blur: {
         flex: 1,
