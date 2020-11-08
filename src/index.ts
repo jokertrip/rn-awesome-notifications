@@ -10,3 +10,6 @@ export {
 }
 
 export type NotificationExtra = TNotificationExtra
+
+
+export * from "./withNotify";
