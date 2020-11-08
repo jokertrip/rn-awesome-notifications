@@ -23,6 +23,8 @@ npm i --save @alexzunik/rn-awesome-notifications
 In root Component
 
 ```
+import { NotificationProvider } from "@alexzunik/rn-awesome-notifications";
+
 <NotificationProvider>
   ...
 </NotificationProvider>
