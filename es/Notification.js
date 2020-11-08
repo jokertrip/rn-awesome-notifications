@@ -123,7 +123,7 @@ var styles = StyleSheet.create({
         borderColor: "#eaeaea",
     },
     borderColordark: {
-        borderColor: "#212121",
+        borderColor: "#4a4a4a",
     },
     blur: {
         flex: 1,
@@ -133,7 +133,7 @@ var styles = StyleSheet.create({
         backgroundColor: Platform.select({ ios: "transparent", default: "white" })
     },
     blurdark: {
-        backgroundColor: Platform.select({ ios: "transparent", default: "#4a4a4a" })
+        backgroundColor: Platform.select({ ios: "transparent", default: "#313131" })
     },
     main: {
         flex: 1,
