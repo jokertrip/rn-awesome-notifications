@@ -1,6 +1,6 @@
 import { BlurView } from "@react-native-community/blur";
 import * as React from "react";
-import { ActivityIndicator, Dimensions, Image, ImageStyle, Platform, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
+import { ActivityIndicator, Dimensions, Image, ImageSourcePropType, ImageStyle, Platform, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import icons from "./icons";
@@ -8,7 +8,7 @@ import { NotificationActions, NotificationParams, NotificationTheme } from "./ty
 
 const screen = Dimensions.get("window");
 
-export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => any }[] }
+export type NotificationExtra = { icon?: any, buttons?: { title?: string | React.ReactNode, icon?: ImageSourcePropType, onPress: () => any, titleStyle?: TextStyle }[] }
 
 const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, theme, opacity }) => {
     const [longMessage, setState] = React.useState(false);
@@ -75,7 +75,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                             >{message}</Text>
                         </View>
                         {
-                            (data?.buttons || []).map(({ title, onPress }, i) => {
+                            (data?.buttons || []).map(({ title, icon, onPress }, i) => {
                                 const key = typeof title === "string" ? title : String(i);
                                 return (
                                     <TapGestureHandler
@@ -94,12 +94,21 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                             }
                                             {
                                                 loading !== key &&
+                                                !!title &&
                                                 <Text
                                                     allowFontScaling={false}
                                                     style={[{ opacity: loading ? .3 : 1 }, themeText]}
                                                 >
                                                     {title}
                                                 </Text>
+                                            }
+                                            {
+                                                loading !== key &&
+                                                !!icon && 
+                                                <Image
+                                                    source={icon}
+                                                    style={styles.icon}
+                                                />
                                             }
                                         </View>
                                     </TapGestureHandler>
@@ -139,6 +148,7 @@ const styles = StyleSheet.create<{
     iconContainer: ViewStyle,
     textlight: TextStyle,
     textdark: TextStyle,
+    icon: ImageStyle
 }>({
     root: {
         flex: 1,
@@ -201,6 +211,11 @@ const styles = StyleSheet.create<{
         alignItems: "center",
         justifyContent: "center"
     },
-    textlight: { color: "#4b4b4b" },
-    textdark: { color: "#ccc" },
+    textlight: { color: "#4b4b4b", textAlign: "center" },
+    textdark: { color: "#ccc", textAlign: "center"  },
+    icon: {
+        width: 30,
+        height: 30,
+        resizeMode: "contain"
+    }
 })
