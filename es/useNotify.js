@@ -12,14 +12,25 @@ var __assign = (this && this.__assign) || function () {
 import { useContext } from "react";
 import { NotificationsActions } from "./useNotificationState";
 import NotificationContext from "./NotificationContext";
+import { NotificationType } from "./types";
 import uuid from "react-native-uuid";
 export default function () {
     var dispatch = useContext(NotificationContext).dispatch;
-    return function (params) {
+    var notify = function (params) {
         var id = uuid.v4();
         dispatch({
             type: NotificationsActions.add,
             notify: __assign(__assign({}, params), { id: id })
         });
     };
+    notify.error = function (params) {
+        notify(__assign(__assign({}, params), { type: NotificationType.error }));
+    };
+    notify.success = function (params) {
+        notify(__assign(__assign({}, params), { type: NotificationType.success }));
+    };
+    notify.info = function (params) {
+        notify(__assign(__assign({}, params), { type: NotificationType.info }));
+    };
+    return notify;
 }

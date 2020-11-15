@@ -4,7 +4,7 @@ export declare type NotificationExtra = {
     icon?: any;
     buttons?: {
         title: string | React.ReactNode;
-        onPress: () => {};
+        onPress: () => any;
     }[];
 };
 declare const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>>;

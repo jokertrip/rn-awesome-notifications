@@ -8,7 +8,7 @@ import { NotificationActions, NotificationParams, NotificationTheme } from "./ty
 
 const screen = Dimensions.get("window");
 
-export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => {} }[] }
+export type NotificationExtra = { icon?: any, buttons?: { title: string | React.ReactNode, onPress: () => any }[] }
 
 const Notification: React.FC<NotificationActions & NotificationParams<NotificationExtra>> = ({ title, message, data, close, type, theme, opacity }) => {
     const [longMessage, setState] = React.useState(false);
