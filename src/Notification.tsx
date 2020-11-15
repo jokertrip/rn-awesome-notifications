@@ -75,7 +75,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                             >{message}</Text>
                         </View>
                         {
-                            (data?.buttons || []).map(({ title, icon, onPress }, i) => {
+                            (data?.buttons || []).map(({ title, icon, onPress, titleStyle }, i) => {
                                 const key = typeof title === "string" ? title : String(i);
                                 return (
                                     <TapGestureHandler
@@ -97,7 +97,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                                 !!title &&
                                                 <Text
                                                     allowFontScaling={false}
-                                                    style={[{ opacity: loading ? .3 : 1 }, themeText]}
+                                                    style={[{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle]}
                                                 >
                                                     {title}
                                                 </Text>
@@ -211,8 +211,8 @@ const styles = StyleSheet.create<{
         alignItems: "center",
         justifyContent: "center"
     },
-    textlight: { color: "#4b4b4b", textAlign: "center" },
-    textdark: { color: "#ccc", textAlign: "center"  },
+    textlight: { color: "#4b4b4b" },
+    textdark: { color: "#ccc"  },
     icon: {
         width: 30,
         height: 30,

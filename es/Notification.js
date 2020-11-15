@@ -80,7 +80,7 @@ var Notification = function (_a) {
                                 }
                             } }, message)),
                     ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
-                        var title = _a.title, icon = _a.icon, onPress = _a.onPress;
+                        var title = _a.title, icon = _a.icon, onPress = _a.onPress, titleStyle = _a.titleStyle;
                         var key = typeof title === "string" ? title : String(i);
                         return (React.createElement(TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
@@ -101,7 +101,7 @@ var Notification = function (_a) {
                                 loading === key && React.createElement(ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                 loading !== key &&
                                     !!title &&
-                                    React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title),
+                                    React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle] }, title),
                                 loading !== key &&
                                     !!icon &&
                                     React.createElement(Image, { source: icon, style: styles.icon }))));
@@ -175,8 +175,8 @@ var styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
-    textlight: { color: "#4b4b4b", textAlign: "center" },
-    textdark: { color: "#ccc", textAlign: "center" },
+    textlight: { color: "#4b4b4b" },
+    textdark: { color: "#ccc" },
     icon: {
         width: 30,
         height: 30,

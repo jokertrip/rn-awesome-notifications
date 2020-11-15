@@ -102,7 +102,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                     }
                                 } }, message)),
                         ((data === null || data === void 0 ? void 0 : data.buttons) || []).map(function (_a, i) {
-                            var title = _a.title, icon = _a.icon, onPress = _a.onPress;
+                            var title = _a.title, icon = _a.icon, onPress = _a.onPress, titleStyle = _a.titleStyle;
                             var key = typeof title === "string" ? title : String(i);
                             return (React.createElement(react_native_gesture_handler_1.TapGestureHandler, { key: key, onHandlerStateChange: function (e) { return __awaiter(void 0, void 0, void 0, function () {
                                     return __generator(this, function (_a) {
@@ -123,7 +123,7 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                     loading === key && React.createElement(react_native_1.ActivityIndicator, { size: "small", color: "gray", collapsable: false }),
                                     loading !== key &&
                                         !!title &&
-                                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1 }, themeText] }, title),
+                                        React.createElement(react_native_1.Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle] }, title),
                                     loading !== key &&
                                         !!icon &&
                                         React.createElement(react_native_1.Image, { source: icon, style: styles.icon }))));
@@ -197,8 +197,8 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
             alignItems: "center",
             justifyContent: "center"
         },
-        textlight: { color: "#4b4b4b", textAlign: "center" },
-        textdark: { color: "#ccc", textAlign: "center" },
+        textlight: { color: "#4b4b4b" },
+        textdark: { color: "#ccc" },
         icon: {
             width: 30,
             height: 30,
