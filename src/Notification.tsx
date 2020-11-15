@@ -104,11 +104,14 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                             }
                                             {
                                                 loading !== key &&
-                                                !!icon && 
-                                                <Image
-                                                    source={icon}
-                                                    style={styles.icon}
-                                                />
+                                                !!icon &&
+                                                <View style={{ flex: 1, alignItems: "center" }}>
+                                                    <Image
+                                                        source={icon}
+                                                        style={styles.icon}
+                                                    />
+                                                </View>
+
                                             }
                                         </View>
                                     </TapGestureHandler>
@@ -212,7 +215,7 @@ const styles = StyleSheet.create<{
         justifyContent: "center"
     },
     textlight: { color: "#4b4b4b" },
-    textdark: { color: "#ccc"  },
+    textdark: { color: "#ccc" },
     icon: {
         width: 30,
         height: 30,

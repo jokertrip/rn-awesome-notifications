@@ -126,7 +126,8 @@ define(["require", "exports", "@react-native-community/blur", "react", "react-na
                                         React.createElement(react_native_1.Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle] }, title),
                                     loading !== key &&
                                         !!icon &&
-                                        React.createElement(react_native_1.Image, { source: icon, style: styles.icon }))));
+                                        React.createElement(react_native_1.View, { style: { flex: 1, alignItems: "center" } },
+                                            React.createElement(react_native_1.Image, { source: icon, style: styles.icon })))));
                         }))))));
     };
     exports.default = Notification;

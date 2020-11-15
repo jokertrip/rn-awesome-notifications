@@ -104,7 +104,8 @@ var Notification = function (_a) {
                                     React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle] }, title),
                                 loading !== key &&
                                     !!icon &&
-                                    React.createElement(Image, { source: icon, style: styles.icon }))));
+                                    React.createElement(View, { style: { flex: 1, alignItems: "center" } },
+                                        React.createElement(Image, { source: icon, style: styles.icon })))));
                     }))))));
 };
 export default Notification;
