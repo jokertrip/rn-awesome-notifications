@@ -104,7 +104,7 @@ var Notification = function (_a) {
                                     React.createElement(Text, { allowFontScaling: false, style: [{ opacity: loading ? .3 : 1, textAlign: "center" }, themeText, titleStyle] }, title),
                                 loading !== key &&
                                     !!icon &&
-                                    React.createElement(View, { style: { flex: 1, alignItems: "center" } },
+                                    React.createElement(View, { style: styles.buttonIconContainer },
                                         React.createElement(Image, { source: icon, style: styles.icon })))));
                     }))))));
 };
@@ -182,5 +182,6 @@ var styles = StyleSheet.create({
         width: 30,
         height: 30,
         resizeMode: "contain"
-    }
+    },
+    buttonIconContainer: { flex: 1, alignItems: "center", justifyContent: "center" }
 });

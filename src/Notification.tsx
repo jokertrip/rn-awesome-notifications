@@ -105,7 +105,7 @@ const Notification: React.FC<NotificationActions & NotificationParams<Notificati
                                             {
                                                 loading !== key &&
                                                 !!icon &&
-                                                <View style={{ flex: 1, alignItems: "center" }}>
+                                                <View style={styles.buttonIconContainer}>
                                                     <Image
                                                         source={icon}
                                                         style={styles.icon}
@@ -151,7 +151,8 @@ const styles = StyleSheet.create<{
     iconContainer: ViewStyle,
     textlight: TextStyle,
     textdark: TextStyle,
-    icon: ImageStyle
+    icon: ImageStyle,
+    buttonIconContainer: ViewStyle
 }>({
     root: {
         flex: 1,
@@ -220,5 +221,6 @@ const styles = StyleSheet.create<{
         width: 30,
         height: 30,
         resizeMode: "contain"
-    }
+    },
+    buttonIconContainer:{ flex: 1, alignItems: "center", justifyContent: "center" }
 })
