@@ -18,6 +18,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ fullState, onPress }) => {
         <Animated.View
             style={[
                 styles.root,
+                // @ts-ignore
                 {
                     opacity: cond(fullState, runTiming(clock)({ duration: 300, toValue: new Value(1), lastVal: new Value(0) }), 0),
                 }

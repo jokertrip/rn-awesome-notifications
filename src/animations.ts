@@ -1,4 +1,4 @@
-import Animated, { Value, cond, clockRunning, set, spring, startClock, stopClock, Clock, call, Easing, block, timing, debug, eq} from "react-native-reanimated";
+import Animated, { Value, cond, clockRunning, set, spring, startClock, stopClock, Clock, call, EasingNode, block, timing, debug, eq} from "react-native-reanimated";
 
 export function runSpring(clock: Clock, value: Value<number>, velocity: Value<number>, dest: Animated.Node<number>, close:  Animated.Node<number>) {
 
@@ -8,7 +8,7 @@ export function runSpring(clock: Clock, value: Value<number>, velocity: Value<nu
       position: new Value(0),
       time: new Value(0),
     };
-  
+
     const config = {
       damping: 10,
       mass: 1,
@@ -18,7 +18,7 @@ export function runSpring(clock: Clock, value: Value<number>, velocity: Value<nu
       restDisplacementThreshold: 0.001,
       toValue: new Value(0),
     };
-  
+
     return [
       cond(clockRunning(clock), 0, [
         set(state.finished, 0),
@@ -58,13 +58,13 @@ export function runSpring(clock: Clock, value: Value<number>, velocity: Value<nu
           time: new Value(0),
           frameTime: new Value(0),
         };
-  
+
         const config = {
           duration,
           toValue: new Value(0),
-          easing: Easing.inOut(Easing.ease),
+          easing: EasingNode.inOut(EasingNode.ease),
         };
-  
+
         return block([
           cond(
             clockRunning(clock),

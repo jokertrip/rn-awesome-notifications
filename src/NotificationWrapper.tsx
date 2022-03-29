@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dimensions, Platform, StyleSheet, ViewStyle } from "react-native";
 import { PanGestureHandler, State as GestureState, TapGestureHandler } from "react-native-gesture-handler";
-import Animated, { add, and, block, call, Clock, cond, defined, Easing, eq, event, Extrapolate, interpolate, lessThan, min, multiply, not, set, stopClock, sub, timing, useValue, Value } from "react-native-reanimated";
+import Animated, { add, and, block, call, Clock, cond, defined, EasingNode, eq, event, Extrapolate, interpolateNode, lessThan, min, multiply, not, set, stopClock, sub, timing, useValue, Value } from "react-native-reanimated";
 import { runSpring } from "./animations";
 import iPhoneHelper from "./iPhoneHelper";
 import DefaultNotification from "./Notification";
@@ -112,7 +112,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             timing(transY, {
                 duration: 250,
                 toValue: closedValue,
-                easing: Easing.ease
+                easing: EasingNode.ease
             }).start(() => { onClose(height) })
         }
 
@@ -121,7 +121,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             timing(scale, {
                 duration: 250,
                 toValue: 0,
-                easing: Easing.ease
+                easing: EasingNode.ease
             }).start(() => { onClose(height) })
         }
 
@@ -142,7 +142,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             timing(transY, {
                 duration: 250,
                 toValue: 0,
-                easing: Easing.ease
+                easing: EasingNode.ease
             }).start(() => { })
         }, [height])
 
@@ -150,10 +150,10 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
             { nativeEvent: { translationY: dragY, velocityY: dragVY, state: state } },
         ]);
 
-        const opacity = min(interpolate(scale, {
+        const opacity = min(interpolateNode(scale, {
             inputRange: Platform.select({ ios: [.7, 1], default: [-1, 1] }),
             outputRange: [0, 1],
-        }), interpolate(translateY, {
+        }), interpolateNode(translateY, {
             inputRange: [-height, 0],
             outputRange: [0, 1],
             extrapolate: Extrapolate.CLAMP
@@ -184,7 +184,7 @@ const Notification: React.FC<NotificationParams & NotificationProps & {
                                 timing(top, {
                                     duration: 250,
                                     toValue: lastOffsetTop.current + h + finalOffsetTop,
-                                    easing: Easing.ease
+                                    easing: EasingNode.ease
                                 }).start();
                                 lastOffsetTop.current += h
                             });

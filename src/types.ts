@@ -16,7 +16,7 @@ export type NotificationParams<TData = any> = {
     onPress?: ()=>void,
     heightAnimation?: Animated.Value<number>
     theme?: NotificationTheme,
-    opacity?: Animated.Node<number>
+    opacity?:any
 }
 
 export type NotificationActions = {

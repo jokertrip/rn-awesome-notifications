@@ -17,7 +17,7 @@ var gulp        = require("gulp"),
 /*     sourcemaps  = require("gulp-sourcemaps"),
     uglify      = require("gulp-uglify"),
     rename      = require("gulp-rename"), */
-    runSequence = require("run-sequence"),
+    runSequence = require('gulp4-run-sequence'),
 /*     mocha       = require("gulp-mocha"),
     istanbul    = require("gulp-istanbul"),
     karma       = require("karma"), */
@@ -43,9 +43,9 @@ gulp.task("clean", function() {
 //* LINT
 //******************************************************************************
 gulp.task("lint", function() {
-    
+
     var program = tslint.Linter.createProgram("./tsconfig.json");
-    
+
     return gulp.src([
         "src/**/**.ts",
 //        "test/**/**.test.ts"
@@ -106,7 +106,7 @@ gulp.task("build-es", function() {
 var tsDtsProject = tsc.createProject("tsconfig.json", {
     declaration: true,
     noResolve: false,
-    typescript: require("typescript") 
+    typescript: require("typescript")
 });
 
 gulp.task("build-dts", function() {
@@ -248,7 +248,7 @@ gulp.task("copy-src", function() {
 //******************************************************************************
 gulp.task("build", function(cb) {
     runSequence(
-        "lint", 
+        "lint",
         [
             //"build-src",
             "build-es",
