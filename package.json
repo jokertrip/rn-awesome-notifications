@@ -1,6 +1,6 @@
 {
-  "name": "@alexzunik/rn-awesome-notifications",
-  "version": "0.1.7",
+  "name": "rn-awesome-notifications",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
   "typings": "./dts/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AleksandrNikolaevich/rn-awesome-notifications.git"
+    "url": "git+https://github.com/jokertrip/rn-awesome-notifications.git"
   },
   "devDependencies": {
     "@react-native-community/blur": "^3.6.0",
@@ -38,9 +38,9 @@
   },
   "description": "Amazing notifications for react native apps",
   "bugs": {
-    "url": "https://github.com/AleksandrNikolaevich/rn-awesome-notifications/issues"
+    "url": "https://github.com/jokertrip/rn-awesome-notifications/issues"
   },
-  "homepage": "https://github.com/AleksandrNikolaevich/rn-awesome-notifications#readme",
+  "homepage": "https://github.com/jokertrip/rn-awesome-notifications#readme",
   "directories": {
     "lib": "lib"
   },
@@ -51,6 +51,6 @@
     "alert",
     "toast"
   ],
-  "author": "aleksandr.nikolaevich.ch@gmail.com",
+  "author": "rushatter@gmail.com",
   "license": "MIT"
 }
