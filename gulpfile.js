@@ -7,21 +7,21 @@
 // Enable ES6
 //require("harmonize")(["harmony", "harmony-proxies", "harmony_proxies"]);
 
-var gulp        = require("gulp"),
-/*     browserify  = require("browserify"),
-    source      = require("vinyl-source-stream"),
-    buffer      = require("vinyl-buffer"), */
-    gulpTslint  = require("gulp-tslint"),
-    tslint      = require("tslint"),
-    tsc         = require("gulp-typescript"),
-/*     sourcemaps  = require("gulp-sourcemaps"),
-    uglify      = require("gulp-uglify"),
-    rename      = require("gulp-rename"), */
+const gulp = require('gulp'),
+    /*     browserify  = require("browserify"),
+        source      = require("vinyl-source-stream"),
+        buffer      = require("vinyl-buffer"), */
+    gulpTslint = require('gulp-tslint'),
+    tslint = require('tslint'),
+    tsc = require('gulp-typescript'),
+    /*     sourcemaps  = require("gulp-sourcemaps"),
+        uglify      = require("gulp-uglify"),
+        rename      = require("gulp-rename"), */
     runSequence = require('gulp4-run-sequence'),
-/*     mocha       = require("gulp-mocha"),
-    istanbul    = require("gulp-istanbul"),
-    karma       = require("karma"), */
-    del         = require('del')
+    /*     mocha       = require("gulp-mocha"),
+        istanbul    = require("gulp-istanbul"),
+        karma       = require("karma"), */
+    del = require('del')
 ;
 
 //******************************************************************************
@@ -35,7 +35,8 @@ gulp.task("clean", function() {
 //        "test/*.test.js",
         "lib",
         "es",
-        "amd"
+        "amd",
+        "dts"
     ]);
 });
 
@@ -61,7 +62,7 @@ gulp.task("lint", function() {
 //******************************************************************************
 //* BUILD
 //******************************************************************************
-var tsLibProject = tsc.createProject("tsconfig.json", { module : "commonjs", typescript: require("typescript") });
+const tsLibProject = tsc.createProject('tsconfig.json', {module: 'commonjs', typescript: require('typescript')});
 
 gulp.task("build-lib", function() {
     return gulp.src([
@@ -75,7 +76,7 @@ gulp.task("build-lib", function() {
     .js.pipe(gulp.dest("lib/"));
 });
 
-var tsAmdProject = tsc.createProject("tsconfig.json", { module : "amd", typescript: require("typescript") });
+const tsAmdProject = tsc.createProject('tsconfig.json', {module: 'amd', typescript: require('typescript')});
 
 gulp.task("build-amd", function() {
     return gulp.src([
@@ -89,7 +90,7 @@ gulp.task("build-amd", function() {
     .js.pipe(gulp.dest("amd/"));
 });
 
-var tsEsProject = tsc.createProject("tsconfig.json", { module : "es2015", typescript: require("typescript") });
+const tsEsProject = tsc.createProject('tsconfig.json', {module: 'es2015', typescript: require('typescript')});
 
 gulp.task("build-es", function() {
     return gulp.src([
@@ -103,10 +104,10 @@ gulp.task("build-es", function() {
     .js.pipe(gulp.dest("es/"));
 });
 
-var tsDtsProject = tsc.createProject("tsconfig.json", {
+const tsDtsProject = tsc.createProject('tsconfig.json', {
     declaration: true,
     noResolve: false,
-    typescript: require("typescript")
+    typescript: require('typescript')
 });
 
 gulp.task("build-dts", function() {
