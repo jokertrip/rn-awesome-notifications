@@ -1,12 +1,11 @@
 {
   "name": "rn-awesome-notifications",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp",
-    "publish": "npm publish --access public",
-    "postinstall": "patch-package"
+    "publish": "npm publish --access public"
   },
   "jsnext:main": "es/index.js",
   "typings": "./dts/index.d.ts",
