@@ -35,7 +35,7 @@
     "@types/node": "^17.0.23",
     "patch-package": "^6.4.7"
   },
-  "description": "Amazing notifications for react native apps",
+  "description": "Notifications for react native apps",
   "bugs": {
     "url": "https://github.com/jokertrip/rn-awesome-notifications/issues"
   },

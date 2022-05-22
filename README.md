@@ -1,6 +1,6 @@
 ### Description
 
-
+Local notifications for React Native app
 
 ### Installation
 
@@ -15,7 +15,7 @@ npm i --save rn-awesome-notifications
 In root Component
 
 ```
-import { NotificationProvider } from "@alexzunik/rn-awesome-notifications";
+import { NotificationProvider } from "rn-awesome-notifications";
 
 <NotificationProvider>
   ...
@@ -25,7 +25,7 @@ import { NotificationProvider } from "@alexzunik/rn-awesome-notifications";
 In your Component
 
 ```
-import { useNotify } from "@alexzunik/rn-awesome-notifications";
+import { useNotify } from "rn-awesome-notifications";
 
 const MyComponent: React.FC = () => {
   
@@ -44,3 +44,9 @@ const MyComponent: React.FC = () => {
   )
 }
 ```
+
+### Examples
+
+<img src="error.png"/>
+<img src="succes.png"/>
+<img src="info.png"/>
