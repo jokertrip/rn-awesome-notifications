@@ -47,6 +47,29 @@ const MyComponent: React.FC = () => {
 
 ### Examples
 
+```
+notify.error({
+    title: 'Error',
+    message,
+    timeout: 15000,
+});
+```
 <img src="error.png"/>
+
+```
+notify.success({
+    title: 'Success',
+    message: 'Everything is fine',
+    timeout: 15000,
+});
+```
 <img src="succes.png"/>
+
+```
+notify.info({
+    title: 'Info',
+    message: 'Some info',
+    timeout: 15000,
+});
+```
 <img src="info.png"/>
